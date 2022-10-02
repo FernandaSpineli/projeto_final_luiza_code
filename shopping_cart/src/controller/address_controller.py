@@ -8,7 +8,7 @@ user = {
     "user_id": "001",
     "nome": "Lu",
     "email": "ludomagalu@gmail.com",
-    "password": "123lu#",
+    "password": "123luiza#",
     "addresses": []
 }
 
