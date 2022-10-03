@@ -1,0 +1,36 @@
+# Criar usuário
+POST http://127.0.0.1:8000/user/ HTTP/1.1
+content-type: application/json
+
+{
+    "id": 1,
+    "nome": "Maria da Silva",
+    "email": "mariadasilva@gmail.com",
+    "senha": "maria1234"
+}
+
+# Consultar usuário por email
+GET http://127.0.0.1:8000/user/mariadasilva@gmail.com HTTP/1.1
+content-type: application/json
+
+
+# Consultar usuário por nome
+GET http://127.0.0.1:8000/user/Maria+da+Silva HTTP/1.1
+content-type: application/json
+
+
+# Deletar usuário por email
+DELETE http://127.0.0.1:8000/user/mariadasilva@gmail.com HTTP/1.1
+content-type: application/json
+
+
+# Atualizar usuário por email
+PUT http://127.0.0.1:8000/user/mariadasilva@gmail.com HTTP/1.1
+content-type: application/json
+
+{
+    "id": 1,
+    "nome": "Maria da Silva",
+    "email": "mariadasilva@gmail.com",
+    "senha": "Mmaria1234"
+}
