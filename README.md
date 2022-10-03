@@ -8,6 +8,12 @@
 
 Crie o arquivo `.env`, copie o conteúdo do arquivo `.env-example` alterando os valores necessários
 
+### Instalar pymongo
+
+```
+pip install pymongo[srv]
+```
+
 ### Criação do ambiente virtual
 
 Linux
