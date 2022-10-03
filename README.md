@@ -4,6 +4,10 @@
 
 ###### TODO
 
+### Criando as variáveis de ambiente
+
+Crie o arquivo `.env`, copie o conteúdo do arquivo `.env-example` alterando os valores necessários
+
 ### Criação do ambiente virtual
 
 Linux
