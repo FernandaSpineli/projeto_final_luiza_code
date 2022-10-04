@@ -31,15 +31,22 @@ addresses = [
     }
 ]
 
-
-@app.get("/{user_id}/addresses")
-async def listar_enderecos(user_id):
+@app.get("/{user_email}/addresses")
+async def get_addresses(user_email):
     return addresses
     
-@app.post("/{user_id}/addresses")
-async def adicionar_endereco(user_id):
+@app.post("/{user_email}/addresses")
+async def add_address(user_email):
     return "endereço adicionado"
-    
-@app.delete("/{user_id}/addresses/{address_id}")
-async def deletar_endereco(user_id, address_id):
+
+@app.get("/{user_email}/addresses/{address_cep}")
+async def get_address_by_cep(user_email, address_cep):
+    return "endereço encontrado!"    
+
+@app.put("/{user_email}/addresses/{address_cep}")
+async def update_address(user_email, address_cep):
+    return "endereço atualizado com sucesso!"
+
+@app.delete("/{user_email}/addresses/{address_cep}")
+async def delete_address(user_email, address_cep):
      return "deletado"
