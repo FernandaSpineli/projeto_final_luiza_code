@@ -1,4 +1,10 @@
+from bd import obter_colecao
+
 from src.models.address import Address
+
+
+addresses_collection = obter_colecao("addresses")
+
 
 async def  add_address(user_email, newaddress: Address):
     try:
@@ -7,7 +13,7 @@ async def  add_address(user_email, newaddress: Address):
         print(e)
 
 async def get_user_addresses(user_email):
-    user = users_collection.find_one(user_email)
+    user = addresses_collection.find_one(user_email)
     addresses = addresses_collection.find_one(user)
     return addresses
     

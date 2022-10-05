@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status
-from shopping_cart.src.repository.cart_repository import (
+from src.repository.cart_repository import (
     CartSchema,
     buscar_carrinho_aberto,
     fechar_carrinho_aberto,

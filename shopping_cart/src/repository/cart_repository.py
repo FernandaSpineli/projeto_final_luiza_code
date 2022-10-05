@@ -1,5 +1,5 @@
-from shopping_cart.bd import obter_colecao
-from shopping_cart.src.models.cart_model import CartSchema
+from bd import obter_colecao
+from src.models.cart_model import CartSchema
 from uuid import uuid4
 
 COLECAO_CARRINHO = obter_colecao("cart")
