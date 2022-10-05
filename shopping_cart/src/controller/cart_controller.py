@@ -1,45 +1,42 @@
 from fastapi import APIRouter, status
 from shopping_cart.src.repository.cart_repository import (
-    CartSchema,
-    buscar_carrinho_aberto,
-    fechar_carrinho_aberto,
-    inserir_novo_carrinho,
-    inserir_novo_produto_carrinho
+    close_user_cart,
+    create_cart,
+    add_product_cart,
+    get_user_cart,
 )
 
 rota_carrinho = APIRouter(
-    prefix="/api/carrinho"
+    prefix="/api/carts"
 )
 
 
 @rota_carrinho.post(
-    "/{id_usuario}/novo",
+    "/{user_id}",
     status_code=status.HTTP_201_CREATED,
-    # response_model=CartSchema
 )
-async def criar_carrinho(id_usuario: str):
-    return await inserir_novo_carrinho(id_usuario)
+async def create(user_id: str):
+    return await create_cart(user_id)
 
 
-@rota_carrinho.put(
-    "/{codigo_carrinho}/produtos",
-    status_code=status.HTTP_202_ACCEPTED
+@rota_carrinho.post(
+    "/{user_id}/{product_id}",
+    status_code=status.HTTP_201_CREATED,
 )
-async def adicionar_produto(codigo_carrinho: str, codigo_produto: str):
-    return await inserir_novo_produto_carrinho(codigo_carrinho, codigo_produto)
+async def add_product(user_id: str, product_id: str):
+    return await add_product_cart(user_id, product_id)
 
 
 @rota_carrinho.get(
-    "/{id_usuario}",
-    # response_model=CartSchema
+    "/{user_id}",
 )
-async def pesquisar_carrinho(id_usuario: str):
-    return await buscar_carrinho_aberto(id_usuario)
+async def get_cart(user_id: str):
+    return await get_user_cart(user_id)
 
 
 @rota_carrinho.put(
-    "/{codigo_carrinho}/status",
+    "/{user_id}/finish",
     status_code=status.HTTP_202_ACCEPTED
 )
-async def fechar_carrinho(codigo_carrinho: str):
-    return await fechar_carrinho_aberto(codigo_carrinho)
+async def close_cart(user_id: str):
+    return await close_user_cart(user_id)
