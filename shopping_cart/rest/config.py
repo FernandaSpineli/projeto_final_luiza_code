@@ -4,7 +4,7 @@ from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from shopping_cart.src.controller.cart_controller import rota_carrinho
-
+from shopping_cart.src.controller.product_controller import product_route
 
 def responder_naoencontradoexcecao(requisicao: Request):
     return JSONResponse(
@@ -40,6 +40,7 @@ def configurar_interceptador_excecoes(app: FastAPI) -> Tuple[Callable]:
 def configurar_rotas(app: FastAPI):
     # Publicando as rotas para o FastAPI.
     app.include_router(rota_carrinho)
+    app.include_router(product_route)
 
 
 def configurar_api_rest(app: FastAPI):
