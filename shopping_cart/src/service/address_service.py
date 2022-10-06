@@ -1,4 +1,4 @@
-from models.address import Address
+from shopping_cart.src.models.address import Address
 
 
 def validate_address(address: Address):

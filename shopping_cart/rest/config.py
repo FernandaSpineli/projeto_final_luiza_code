@@ -3,8 +3,8 @@ from typing import Callable, Tuple
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from src.controller.cart import rota_carrinho
-from src.controller.product import product_route
+from shopping_cart.src.controller.cart_controller import cart_route, purchases_route
+from shopping_cart.src.controller.product_controller import product_route
 
 
 def responder_naoencontradoexcecao(requisicao: Request):
@@ -34,7 +34,8 @@ def configurar_interceptador_excecoes(app: FastAPI) -> Tuple[Callable]:
 
 def configurar_rotas(app: FastAPI):
     # Publicando as rotas para o FastAPI.
-    app.include_router(rota_carrinho)
+    app.include_router(cart_route)
+    app.include_router(purchases_route)
     app.include_router(product_route)
 
 

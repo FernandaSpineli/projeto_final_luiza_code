@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status
-from repository.cart import (
+from shopping_cart.src.repository.cart_repository import (
     add_product_to_cart,
     remove_product_type_from_cart,
     remove_product_from_cart,
@@ -11,10 +11,10 @@ from repository.cart import (
     transaction_history,
 )
 
-from models.cart import CartProduct
+from shopping_cart.src.models.cart import CartProduct
 
 cart_route = APIRouter(prefix="/user/{user_id}/shopping-cart")
-transaction_history_route = APIRouter(prefix="/user/{user_id}/transaction-history")
+purchases_route = APIRouter(prefix="/user/{user_id}/transaction-history")
 
 
 @cart_route.post("/product/", status_code=status.HTTP_201_CREATED)
@@ -47,18 +47,18 @@ async def show_cart_products_route(user_id: str):
     return await show_cart_products(user_id)
 
 
-@transaction_history_route.post("/", status_code=status.HTTP_201_CREATED)
+@purchases_route.post("/", status_code=status.HTTP_201_CREATED)
 async def cart_to_purchase_route(
     user_id: str, payment_method: str, delivery_address_id
 ):
     return await cart_to_purchase(user_id, payment_method, delivery_address_id)
 
 
-@transaction_history_route.get("/{purchase_id}", status_code=status.HTTP_200_OK)
+@purchases_route.get("/{purchase_id}", status_code=status.HTTP_200_OK)
 async def find_purchase_by_id_route(user_id: str, purchase_id: str):
     return await find_purchase_by_id(user_id, purchase_id)
 
 
-@transaction_history_route.get("/", status_code=status.HTTP_200_OK)
+@purchases_route.get("/", status_code=status.HTTP_200_OK)
 async def transaction_history_route(user_id: str):
     return await transaction_history(user_id)

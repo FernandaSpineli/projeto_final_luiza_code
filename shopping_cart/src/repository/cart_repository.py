@@ -1,10 +1,10 @@
-from models.cart import CartProduct, ShoppingCart
+from shopping_cart.src.models.cart import CartProduct, ShoppingCart
 
-from user import get_user_by_id
-from product import get_product_by_id
+from shopping_cart.src.repository.user_repository import get_user_by_id
+from shopping_cart.src.repository.product_repository import get_product_by_id
 
-from service.user import validate_user
-from service.product import validate_product
+from shopping_cart.src.service.user_service import validate_user
+from shopping_cart.src.service.product_service import validate_product
 
 # - talvez precise mexer nesta parte do código, até a linha 16
 from shopping_cart.bd import obter_colecao
@@ -194,56 +194,56 @@ async def show_cart_products(user_id: str):
     except Exception as e:
         return f"show_cart_products.error: {e}"
 
+
 # ESTA FUNÇÃO ESTA CAGADA
 async def cart_to_purchase(user_id: str, payment_method: str, delivery_address_id: str):
-    try:
-        user = await get_user_by_id(user_id)
-        validate_user(user)
+    # try:
+    #     user = await get_user_by_id(user_id)
+    #     validate_user(user)
 
-        user = await USERS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
+    #     user = await USERS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
 
-        user_addresses = user["addresses"] #lista de Address
-        user_shopping_cart = user["shopping_cart"] #ShoppingCart
-        user_transaction_history = user["transaction_history"] #lista de Purchase
+    #     user_addresses = user["addresses"] #lista de Address
+    #     user_shopping_cart = user["shopping_cart"] #ShoppingCart
+    #     user_transaction_history = user["transaction_history"] #lista de Purchase
 
-        for address in user_addresses:
-            if address["id"] == delivery_address_id:
-                delivery_address = address #####################################################
+    #     for address in user_addresses:
+    #         if address["id"] == delivery_address_id:
+    #             delivery_address = address #####################################################
 
-        
-    #     for item in product_list:
-    #         if item["product_id"] == cart_product.product_id:
-    #             item["amount"] += cart_product.amount
-    #             new_product = False
+    # #     for item in product_list:
+    # #         if item["product_id"] == cart_product.product_id:
+    # #             item["amount"] += cart_product.amount
+    # #             new_product = False
 
-    #     if new_product:
-    #         product_list.append(cart_product)
+    # #     if new_product:
+    # #         product_list.append(cart_product)
 
-    #     price_credit = user_cart["price_credit"] + product.price * cart_product.amount
-    #     price_debit = price_credit * 0.9
-    #     number_of_items = user_cart["number_of_items"] + cart_product.amount
+    # #     price_credit = user_cart["price_credit"] + product.price * cart_product.amount
+    # #     price_debit = price_credit * 0.9
+    # #     number_of_items = user_cart["number_of_items"] + cart_product.amount
 
-    #     cart = await CARTS_COLLECTION.update_one(
-    #         {"user_id": user_id},
-    #         {
-    #             "$set": {
-    #                 "products": product_list,
-    #                 "price_credit": price_credit,
-    #                 "price_debit": price_debit,
-    #                 "number_of_items": number_of_items,
-    #             }
-    #         },
-    #     )
+    # #     cart = await CARTS_COLLECTION.update_one(
+    # #         {"user_id": user_id},
+    # #         {
+    # #             "$set": {
+    # #                 "products": product_list,
+    # #                 "price_credit": price_credit,
+    # #                 "price_debit": price_debit,
+    # #                 "number_of_items": number_of_items,
+    # #             }
+    # #         },
+    # #     )
 
-    #     if cart.modified_count:
-    #         return STATUS_OK
+    # #     if cart.modified_count:
+    # #         return STATUS_OK
 
-    # except Exception as e:
-    #     return f"add_product_cart.error: {e}"
-    #     # aqui vamos criar uma instancia de purchase com as informações passadas
-    # # e adicionar a lista transaction_history do usuário
-    # # e chamar a função clear_cart() para zerar o carrinho
-    # return "OK"
+    # # except Exception as e:
+    # #     return f"add_product_cart.error: {e}"
+    # #     # aqui vamos criar uma instancia de purchase com as informações passadas
+    # # # e adicionar a lista transaction_history do usuário
+    # # # e chamar a função clear_cart() para zerar o carrinho
+    return "OK"
 
 
 async def find_purchase_by_id(user_id: str, purchase_id: str):
