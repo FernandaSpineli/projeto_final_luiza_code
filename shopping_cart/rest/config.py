@@ -3,24 +3,19 @@ from typing import Callable, Tuple
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from shopping_cart.src.controller.cart_controller import rota_carrinho
-from shopping_cart.src.controller.product_controller import product_route
+from src.controller.cart import rota_carrinho
+from src.controller.product import product_route
+
 
 def responder_naoencontradoexcecao(requisicao: Request):
     return JSONResponse(
-        status_code=status.HTTP_404_NOT_FOUND,
-        content={
-            "mensagem": 'Erro'
-        }
+        status_code=status.HTTP_404_NOT_FOUND, content={"mensagem": "Erro"}
     )
 
 
 def responder_outroregistroexcecao(requisicao: Request):
     return JSONResponse(
-        status_code=status.HTTP_409_CONFLICT,
-        content={
-            "mensagem": 'Erro'
-        }
+        status_code=status.HTTP_409_CONFLICT, content={"mensagem": "Erro"}
     )
 
 
