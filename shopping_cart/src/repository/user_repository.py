@@ -1,6 +1,6 @@
 from bd import obter_colecao
 from shopping_cart.bd import obter_colecao
-from src.models.user import User
+from src.controller.user_controller import User
 
 
 CARTS_COLLECTION = obter_colecao("carts")
