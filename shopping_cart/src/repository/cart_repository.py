@@ -163,7 +163,7 @@ async def clear_cart(user_id: str):
         return f"clear_cart: {e}"
 
 
-async def find_product_on_cart(user_id: str, product_id: str):
+async def get_product_on_cart(user_id: str, product_id: str):
     try:
         user = await get_user_by_id(user_id)
         validate_user(user)
@@ -182,7 +182,7 @@ async def find_product_on_cart(user_id: str, product_id: str):
         return f"find_product_on_cart.error: {e}"
 
 
-async def show_cart_products(user_id: str):
+async def get_cart_products(user_id: str):
     try:
         user = await get_user_by_id(user_id)
         validate_user(user)
@@ -247,7 +247,7 @@ async def cart_to_purchase(user_id: str, payment_method: str, delivery_address_i
     return "OK"
 
 
-async def find_purchase_by_id(user_id: str, purchase_id: str):
+async def get_purchase_by_id(user_id: str, purchase_id: str):
     try:
         user = await get_user_by_id(user_id)
         validate_user(user)

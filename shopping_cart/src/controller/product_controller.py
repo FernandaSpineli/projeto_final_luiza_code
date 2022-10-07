@@ -17,13 +17,13 @@ async def update_product(product_id: str, features: dict):
 
 
 # Pesquisar produto pelo código
-@product_route.get("/search_id/{product_id}")
+@product_route.get("/{product_id}")
 async def search_product_by_id(product_id: str):
     await ps.get_product_by_id(product_id)
 
 
 # Pesquisar produto pelo nome
-@product_route.get("/search_name/{product_name}/")
+@product_route.get("/{product_name}/")
 async def search_product_by_name(product_name: str):
     await ps.get_product_by_name(product_name)
 
