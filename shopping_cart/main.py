@@ -1,3 +1,5 @@
+from rest.config import criar_aplicacao_fastapi
+
 def first_route():
     l1 = '================================================='
     l2 = '******** Bem-vindo à Casa da Lu tecidos ********'
@@ -7,3 +9,6 @@ def first_route():
 
 test = first_route()
 
+
+
+app = criar_aplicacao_fastapi()

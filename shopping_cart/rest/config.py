@@ -3,7 +3,7 @@ from typing import Callable, Tuple
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from models.handler_exceptions.conflict_exception import conflict_exception
+from src.models.handler_exceptions.conflict_exception import conflict_exception
 
 from src.controller.cart_controller import rota_carrinho
 from src.controller.address_controller import route_addresses
@@ -13,23 +13,16 @@ from src.models.handler_exceptions import (
 )
 
 
-def responder_nao_encontrado_excecao(requisicao: Request):
-    return not_found_exception.entity_not_found()
-
-
-def responder_outro_registro_excecao(requisicao: Request):
-    return conflict_exception.conflict_exception()
-
 def configurar_interceptador_excecoes(app: FastAPI) -> Tuple[Callable]:
-    async def interceptador_naoencontradoexcecao(request: Request):
-        return responder_nao_encontrado_excecao(request)
+    async def interceptador_nao_encontrado_excecao(request: Request):
+        return not_found_exception.entity_not_found(request)
 
-    async def interceptador_outroregistroexcecao(request: Request):
-        return responder_outro_registro_excecao(request)
+    async def interceptador_outro_registro_excecao(request: Request):
+        return conflict_exception.conflict_exception(request)
 
     return (
-        interceptador_naoencontradoexcecao,
-        interceptador_outroregistroexcecao,
+        interceptador_nao_encontrado_excecao,
+        interceptador_outro_registro_excecao
     )
 
 
