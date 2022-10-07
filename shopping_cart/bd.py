@@ -1,7 +1,7 @@
 from motor.motor_asyncio import (
     AsyncIOMotorClient,
     AsyncIOMotorDatabase,
-    AsyncIOMotorCollection
+    AsyncIOMotorCollection,
 )
 
 from config import configuracao
