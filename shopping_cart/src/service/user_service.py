@@ -1,4 +1,4 @@
-from shopping_cart.src.models.user import User
+from src.models.user import User
 
 
 def validate_user(user: User):

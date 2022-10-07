@@ -3,41 +3,37 @@ from typing import Callable, Tuple
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from shopping_cart.src.controller.cart_controller import cart_route, purchases_route
-from shopping_cart.src.controller.product_controller import product_route
+from src.models.handler_exceptions.conflict_exception import conflict_exception
 
-
-def responder_naoencontradoexcecao(requisicao: Request):
-    return JSONResponse(
-        status_code=status.HTTP_404_NOT_FOUND, content={"mensagem": "Erro"}
-    )
-
-
-def responder_outroregistroexcecao(requisicao: Request):
-    return JSONResponse(
-        status_code=status.HTTP_409_CONFLICT, content={"mensagem": "Erro"}
-    )
+from src.controller.cart_controller import cart_route, purchases_route
+from src.controller.product_controller import product_route
+from src.controller.address_controller import route_addresses
+from src.models.handler_exceptions import (
+    not_found_exception,
+    conflict_exception
+)
 
 
 def configurar_interceptador_excecoes(app: FastAPI) -> Tuple[Callable]:
-    async def interceptador_naoencontradoexcecao(request: Request):
-        return responder_naoencontradoexcecao(request)
+    async def interceptador_nao_encontrado_excecao(request: Request):
+        return not_found_exception.entity_not_found(request)
 
-    async def interceptador_outroregistroexcecao(request: Request):
-        return responder_outroregistroexcecao(request)
+    async def interceptador_outro_registro_excecao(request: Request):
+        return conflict_exception.conflict_exception(request)
 
     return (
-        interceptador_naoencontradoexcecao,
-        interceptador_outroregistroexcecao,
+        interceptador_nao_encontrado_excecao,
+        interceptador_outro_registro_excecao
     )
 
 
 def configurar_rotas(app: FastAPI):
     # Publicando as rotas para o FastAPI.
+
     app.include_router(cart_route)
     app.include_router(purchases_route)
     app.include_router(product_route)
-
+    app.include_router(route_addresses)
 
 def configurar_api_rest(app: FastAPI):
     app.add_middleware(

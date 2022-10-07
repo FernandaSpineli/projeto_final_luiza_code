@@ -1,4 +1,4 @@
-from shopping_cart.bd import obter_colecao
+from bd import obter_colecao
 
 CARTS_COLLECTION = obter_colecao("carts")
 USERS_COLLECTION = obter_colecao("users")

@@ -1,13 +1,14 @@
-from shopping_cart.src.models.cart import CartProduct, ShoppingCart
 
-from shopping_cart.src.repository.user_repository import get_user_by_id
-from shopping_cart.src.repository.product_repository import get_product_by_id
+from src.models.cart import CartProduct, ShoppingCart
 
-from shopping_cart.src.service.user_service import validate_user
-from shopping_cart.src.service.product_service import validate_product
+from src.repository.user_repository import get_user_by_id
+from src.repository.product_repository import get_product_by_id
+
+from src.service.user_service import validate_user
+from src.service.product_service import validate_product
 
 # - talvez precise mexer nesta parte do código, até a linha 16
-from shopping_cart.bd import obter_colecao
+from bd import obter_colecao
 
 CARTS_COLLECTION = obter_colecao("carts")
 USERS_COLLECTION = obter_colecao("users")

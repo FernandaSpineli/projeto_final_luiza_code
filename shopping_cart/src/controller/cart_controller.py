@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status
-from shopping_cart.src.repository.cart_repository import (
+from src.repository.cart_repository import (
     add_product_to_cart,
     remove_product_type_from_cart,
     remove_product_from_cart,
@@ -11,23 +11,23 @@ from shopping_cart.src.repository.cart_repository import (
     transaction_history,
 )
 
-from shopping_cart.src.models.cart import CartProduct
+from src.models.cart import CartProduct
 
-cart_route = APIRouter(prefix="/user/{user_id}/shopping-cart")
-purchases_route = APIRouter(prefix="/user/{user_id}/transaction-history")
+cart_route = APIRouter(prefix="/api/users/{user_id}/shopping-cart")
+purchases_route = APIRouter(prefix="/api/users/{user_id}/transaction-history")
 
 
-@cart_route.post("/product/", status_code=status.HTTP_201_CREATED)
+@cart_route.post("/products/", status_code=status.HTTP_201_CREATED)
 async def add_product_to_cart_route(user_id: str, cart_product: CartProduct):
     return await add_product_to_cart(user_id, cart_product)
 
 
-@cart_route.delete("/product/{product_id}/", status_code=status.HTTP_200_OK)
+@cart_route.delete("/products/{product_id}/", status_code=status.HTTP_200_OK)
 async def remove_product_type_from_cart_route(user_id: str, product_id: str):
     return await remove_product_type_from_cart(user_id, product_id)
 
 
-@cart_route.delete("/product/", status_code=status.HTTP_200_OK)
+@cart_route.delete("/products/", status_code=status.HTTP_200_OK)
 async def remove_product_from_cart_route(user_id: str, cart_product: CartProduct):
     return await remove_product_from_cart(user_id, cart_product)
 
@@ -37,7 +37,7 @@ async def clear_cart_route(user_id: str):
     return await clear_cart(user_id)
 
 
-@cart_route.get("/product/{product_id}/", status_code=status.HTTP_200_OK)
+@cart_route.get("/products/{product_id}/", status_code=status.HTTP_200_OK)
 async def find_product_on_cart_route(user_id: str, product_id: str):
     return await find_product_on_cart(user_id, product_id)
 

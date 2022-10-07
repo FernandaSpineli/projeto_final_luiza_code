@@ -1,7 +1,9 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, status
 
 
-app = FastAPI()
+route_addresses = APIRouter(
+    prefix="/api/users"
+)
 
 
 user = {
@@ -31,22 +33,22 @@ addresses = [
     }
 ]
 
-@app.get("/{user_email}/addresses")
+@route_addresses.get("/{user_email}/addresses")
 async def get_addresses(user_email):
     return addresses
     
-@app.post("/{user_email}/addresses")
+@route_addresses.post("/{user_email}/addresses")
 async def add_address(user_email):
     return "endereço adicionado"
 
-@app.get("/{user_email}/addresses/{address_cep}")
+@route_addresses.get("/{user_email}/addresses/{address_cep}")
 async def get_address_by_cep(user_email, address_cep):
     return "endereço encontrado!"    
 
-@app.put("/{user_email}/addresses/{address_cep}")
+@route_addresses.put("/{user_email}/addresses/{address_cep}")
 async def update_address(user_email, address_cep):
     return "endereço atualizado com sucesso!"
 
-@app.delete("/{user_email}/addresses/{address_cep}")
+@route_addresses.delete("/{user_email}/addresses/{address_cep}")
 async def delete_address(user_email, address_cep):
      return "deletado"

@@ -1,4 +1,4 @@
-from shopping_cart.src.models.product import Product
+from src.models.product import Product
 
 
 def validate_product(product: Product):
