@@ -41,7 +41,7 @@ def configurar_rotas(app: FastAPI):
     # Publicando as rotas para o FastAPI.
     app.include_router(rota_carrinho)
 
-
+    
 def configurar_api_rest(app: FastAPI):
     app.add_middleware(
         CORSMiddleware,
