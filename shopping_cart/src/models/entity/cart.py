@@ -1,13 +1,12 @@
 # sugestão de mudança dessas models
 from pydantic import BaseModel
 from typing import List
-from shopping_cart.src.models.entity.address import Address
 
+from shopping_cart.src.models.entity.address import Address
 
 class CartProduct(BaseModel):
     product_id: str
     amount: int
-
 
 class ShoppingCart(BaseModel):
     user_id: str
@@ -16,7 +15,6 @@ class ShoppingCart(BaseModel):
     price_debit: float = 0.0
     number_of_items: int = 0
     delivery_address_id: str = ""
-
 
 class Purchase(BaseModel):
     id: str

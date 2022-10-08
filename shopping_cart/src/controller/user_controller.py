@@ -1,5 +1,6 @@
 from shopping_cart.src.models.entity.user import User
 from fastapi import FastAPI, APIRouter
+
 from typing import List
 
 user_route = APIRouter(
