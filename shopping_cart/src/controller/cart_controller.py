@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status
-from src.repository.cart_repository import (
+from src.models.repository.cart_repository import (
     add_product_to_cart,
     remove_product_type_from_cart,
     remove_product_from_cart,
@@ -11,7 +11,7 @@ from src.repository.cart_repository import (
     transaction_history,
 )
 
-from src.models.cart import CartProduct
+from src.models.entity.cart import CartProduct
 
 cart_route = APIRouter(prefix="/api/users/{user_id}/shopping-cart")
 purchases_route = APIRouter(prefix="/api/users/{user_id}/transaction-history")

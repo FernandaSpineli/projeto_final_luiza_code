@@ -1,6 +1,5 @@
 from fastapi import APIRouter
-from src.models.product import Product
-import src.service.product_service as ps
+from src.models.entity.product import Product
 
 product_route = APIRouter(prefix="/api/products")
 

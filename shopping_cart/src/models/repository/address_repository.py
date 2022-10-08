@@ -1,6 +1,6 @@
 from re import A
 from bd import obter_colecao
-from src.models.address import Address
+from src.models.entity.address import Address
 
 USERS_COLLECTION = obter_colecao("users")
 ADDRESSES_COLLECTION = obter_colecao("addresses")
