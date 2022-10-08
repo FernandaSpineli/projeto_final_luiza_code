@@ -1,0 +1,51 @@
+# Cadastrar produto
+POST http://127.0.0.1:8000/api/product/ HTTP/1.1
+content-type: application/json
+
+{
+    "id": "10001",
+    "name": "Jogo de Cama Casal Queen - Kit 6 Peças",
+    "description": "O jogo de cama M. F. Enxovais tem o estilo moderno cosmopolita, trazendo em sua composição tons de salmão, bege e azul, facilitando combinações com diversas cores, deixando o quarto mais alegre e confortável com alta qualidade",
+    "category": "Cama",
+    "subcategory": "Jogo de Cama",
+    "brand": "M. F. Enxovais",
+    "color": "Salmão, bege e azul",
+    "fabric": "100% poliéster",
+    "dimensions": "1 Edredom 2,40 X 2,15 m
+            - 2 Porta travesseiros 70 x 50 cm
+            - 1 Lençol de baixo 1,98 x 1,58 x 0,30 cm
+            - 1 capa de almofada 60 x 40 cm
+            - 1 Refil de almofada 55 x 35 cm",
+    "items_quantity": 6,
+    "price": 295.90
+}
+
+# Atualizar dados do produto
+PUT http://127.0.0.1:8000/api/product/10001 HTTP/1.1
+content-type: application/json
+{
+    "name": ,
+    "description":,
+    "category": "Cama",
+    "subcategory":,
+    "brand": ,
+    "color": "Rosa",
+    "fabric": "100% algodão",
+    "dimensions":,
+    "items_quantity": ,
+    "price": 525.99
+}
+
+# Consultar produto por código
+GET http://127.0.0.1:8000/api/product/10001 HTTP/1.1
+content-type: application/json
+
+# Consultar produto por nome
+GET http://127.0.0.1:8000/api/product/Jogo+de+Cama HTTP/1.1
+content-type: application/json
+
+# Deletar um produto por código
+DELETE http://127.0.0.1:8000/api/product/10001 HTTP/1.1
+content-type: application/json
+
+

@@ -1,7 +1,19 @@
+from bd import obter_colecao
 from shopping_cart.bd import obter_colecao
-from src.models.user import User
+from src.controller.user_controller import User
 
+
+CARTS_COLLECTION = obter_colecao("carts")
 USERS_COLLECTION = obter_colecao("users")
+PRODUCTS_COLLECTION = obter_colecao("products")
+CART_ITEMS_COLLECTION = obter_colecao("cart_items")
+STATUS_OK = "OK"
+STATUS_FAIL = "FAIL"
+
+
+async def get_user_by_id(id: str):
+    user = await USERS_COLLECTION.find_one({"id": id})
+    return user
 
 async def post_user(user_email, new_user: User):
     try:

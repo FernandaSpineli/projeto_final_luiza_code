@@ -1,36 +1,34 @@
-from fastapi import FastAPI
-from models.product_models import Product
-import product_rules
+from fastapi import APIRouter
+from src.models.product import Product
+import src.service.product_service as ps
 
-app = FastAPI()
+product_route = APIRouter(prefix="/api/products")
 
- 
 # Cadastrar produto
-@app.post("/product")
+@product_route.post("/")
 async def create_product(product: Product):
-    new_product = await product_rules.insert_product(product)
-    return new_product 
-    
- # Atualizar dados do produto
-@app.put("/product/{id}")
-async def update_product(id: str, features: dict):
-    updated_product = await product_rules.update_features_product(id, features)
-    return updated_product
+    await ps.insert_product(product)
+
+
+# Atualizar dados do produto
+@product_route.put("/{product_id}")
+async def update_product(product_id: str, features: dict):
+    await ps.update_features_product(product_id, features)
+
 
 # Pesquisar produto pelo código
-@app.get("/product/search_id/{id}")
-async def search_product_by_id(id: str):
-    product = await product_rules.get_product_by_id(id)
-    return product
+@product_route.get("/search_id/{product_id}")
+async def search_product_by_id(product_id: str):
+    await ps.get_product_by_id(product_id)
+
 
 # Pesquisar produto pelo nome
-@app.get("/product/search_name/{name}/")
-async def search_product_by_name(name: str):
-    product = await product_rules.get_product_by_name(name) 
-    return product
-    
+@product_route.get("/search_name/{product_name}/")
+async def search_product_by_name(product_name: str):
+    await ps.get_product_by_name(product_name)
+
+
 # Remover um produto
-@app.delete("/produto/{id}/")
-async def delete_product(id: str):
-    deleted_product = await product_rules.remove_product(id)
-    return deleted_product
+@product_route.delete("/{product_id}/")
+async def delete_product(product_id: str):
+    await ps.remove_product(product_id)
