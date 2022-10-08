@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 
 from src.models.entity.address import Address
-from src.models.repository.address_repository import (
+from src.repository.address_repository import (
     add_new_address,
     get_address_by_cep,
     get_user_addresses,

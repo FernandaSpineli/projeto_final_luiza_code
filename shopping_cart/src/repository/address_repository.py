@@ -1,6 +1,6 @@
-from re import A
 from bd import obter_colecao
 from src.models.entity.address import Address
+
 
 USERS_COLLECTION = obter_colecao("users")
 ADDRESSES_COLLECTION = obter_colecao("addresses")
@@ -8,14 +8,10 @@ ADDRESSES_COLLECTION = obter_colecao("addresses")
 
 async def add_new_address(user_email, newaddress: Address):
     try:
-        addresses = await get_user_addresses(user_email)
-        if newaddress not in addresses:
             ADDRESSES_COLLECTION.insert_one(newaddress)
             return "endereço adicionado com sucesso"
     except Exception as e:
         print(e)
-
-
 
 async def get_user_addresses(user_email):
     try:
@@ -27,15 +23,12 @@ async def get_user_addresses(user_email):
     except Exception as e:
         print(e)
 
-
 async def get_address_by_cep(user_email, address_cep):
     try:
-        addresses = await get_user_addresses(user_email)
         address = ADDRESSES_COLLECTION.find_one(address_cep)
         return address
     except Exception as e:
         print(e)
-
 
 async def get_addresses_delivery(user_email):
     try:
@@ -45,7 +38,6 @@ async def get_addresses_delivery(user_email):
     except Exception as e:
         print(e)
 
-
 async def update_address(user_email, address_cep, address: Address):
     try:
         address = await get_address_by_cep(user_email, address_cep)
@@ -53,7 +45,6 @@ async def update_address(user_email, address_cep, address: Address):
 
     except Exception as e:
         print(e)
-
 
 async def delete_address(user_email, address_cep):
     try:
