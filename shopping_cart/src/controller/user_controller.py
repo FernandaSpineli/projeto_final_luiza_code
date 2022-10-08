@@ -1,4 +1,4 @@
-from src.models.user import User
+from src.models.entity.user import User
 from fastapi import FastAPI
 from typing import List
 
