@@ -1,6 +1,7 @@
 from fastapi import APIRouter
-from models.product_model import Product
-import service.product_service as ps
+from typing import List
+from shopping_cart.src.models.entity.product import Product
+import shopping_cart.src.business.product_business as ps
 
 product_route = APIRouter(
     prefix="/api/product"
@@ -10,7 +11,7 @@ product_route = APIRouter(
 @product_route.post("/")
 async def create_product(product: Product):
     await ps.insert_product(product)
-    
+    return "Produto cadastrado com sucesso"
     
  # Atualizar dados do produto
 @product_route.put("/{id}")
@@ -19,19 +20,22 @@ async def update_product(id: str, features: dict):
     
 
 # Pesquisar produto pelo código
-@product_route.get("/search_id/{id}")
+@product_route.get("/search_id/{id}", response_model= Product)
 async def search_product_by_id(id: str):
-    await ps.get_product_by_id(id)
+    product = await ps.get_product_by_id(id)
+    return product
     
 
 # Pesquisar produto pelo nome
-@product_route.get("/search_name/{name}/")
+@product_route.get("/search_name/{name}", response_model = List[Product])
 async def search_product_by_name(name: str):
-    await ps.get_product_by_name(name) 
+    product = await ps.get_product_by_name(name)
+    return product 
     
     
 # Remover um produto
-@product_route.delete("/{id}/")
+@product_route.delete("/{id}")
 async def delete_product(id: str):
-    await ps.remove_product(id)
+    removed_quantity = await ps.remove_product(id)
+    return removed_quantity
     
