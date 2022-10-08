@@ -1,6 +1,6 @@
 # nome do arquivo simplificado para user.py
-from src.models.address import Address
-from src.models.cart import ShoppingCart, Purchase
+from src.models.entity.address import Address
+from src.models.entity.cart import ShoppingCart, Purchase
 from typing import List
 from pydantic import BaseModel
 

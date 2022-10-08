@@ -1,5 +1,16 @@
 from fastapi import APIRouter, status
 
+from src.models.entity.address import Address
+from src.repository.address_repository import (
+    add_new_address,
+    get_address_by_cep,
+    get_user_addresses,
+    delete_address
+)
+from src.models.handler_exceptions import(
+    not_found_exception,
+    conflict_exception
+)
 
 route_addresses = APIRouter(
     prefix="/api/users"
@@ -33,18 +44,29 @@ addresses = [
     }
 ]
 
+@route_addresses.post("/{user_email}/addresses")
+async def add_address(user_email, new_address: Address):
+    try:
+        address = new_address
+        new_address = await add_new_address(user_email, address)
+        return "Novo endereço cadastrado com sucesso."
+    except Exception as e:
+        return "erro"
+
 @route_addresses.get("/{user_email}/addresses")
 async def get_addresses(user_email):
-    return addresses
+    try:
+       user_addresses = await get_user_addresses(user_email)
+    except Exception as e:
+        return not_found_exception.entity_not_found(addresses)
     
-@route_addresses.post("/{user_email}/addresses")
-async def add_address(user_email):
-    return "endereço adicionado"
-
 @route_addresses.get("/{user_email}/addresses/{address_cep}")
 async def get_address_by_cep(user_email, address_cep):
     return "endereço encontrado!"    
-
+@route_addresses.get("/{user_email}/addresses/delivery")
+async def get_addresses_delivery(user_email):
+    return "endereços que aceitam entrega"
+    
 @route_addresses.put("/{user_email}/addresses/{address_cep}")
 async def update_address(user_email, address_cep):
     return "endereço atualizado com sucesso!"

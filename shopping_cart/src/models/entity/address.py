@@ -2,10 +2,9 @@ from pydantic import BaseModel
 
 
 class Address(BaseModel):
-    id: str
     name: str
     street: str
-    house_number: str
+    house_number: int
     zipcode: str
     city: str
     state: str

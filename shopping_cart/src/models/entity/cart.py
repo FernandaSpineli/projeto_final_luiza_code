@@ -1,7 +1,7 @@
 # sugestão de mudança dessas models
 from pydantic import BaseModel
 from typing import List
-from src.models.address import Address
+from src.models.entity.address import Address
 
 
 class CartProduct(BaseModel):
