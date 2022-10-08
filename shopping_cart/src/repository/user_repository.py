@@ -1,6 +1,5 @@
-from bd import obter_colecao
 from shopping_cart.bd import obter_colecao
-from src.controller.user_controller import User
+from shopping_cart.src.controller.user_controller import User
 
 
 CARTS_COLLECTION = obter_colecao("carts")

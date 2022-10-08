@@ -1,13 +1,13 @@
 from fastapi import APIRouter, status
 
-from src.models.entity.address import Address
-from src.repository.address_repository import (
+from shopping_cart.src.models.entity.address import Address
+from shopping_cart.src.repository.address_repository import (
     add_new_address,
     get_address_by_cep,
     get_user_addresses,
     delete_address
 )
-from src.models.handler_exceptions import(
+from shopping_cart.src.models.handler_exceptions import(
     not_found_exception,
     conflict_exception
 )
@@ -74,3 +74,4 @@ async def update_address(user_email, address_cep):
 @route_addresses.delete("/{user_email}/addresses/{address_cep}")
 async def delete_address(user_email, address_cep):
      return "deletado"
+     
