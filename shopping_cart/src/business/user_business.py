@@ -2,22 +2,26 @@ from shopping_cart.bd import obter_colecao
 from shopping_cart.src.controller.user_controller import User
 
 
+CARTS_COLLECTION = obter_colecao("carts")
 USERS_COLLECTION = obter_colecao("users")
+PRODUCTS_COLLECTION = obter_colecao("products")
+CART_ITEMS_COLLECTION = obter_colecao("cart_items")
+STATUS_OK = "OK"
+STATUS_FAIL = "FAIL"
 
 
-async def get_user_by_id(user_id: str):
-    try:
-        user = await USERS_COLLECTION.find_one({"id": user_id})
-        return user
-    except Exception as e:
-        print(e)
+async def get_user_by_id(id: str):
+    user = await USERS_COLLECTION.find_one({"id": id})
+    return user
 
 async def post_user(user_email, new_user: User):
     try:
+        get_user_by_email(user_email)
         USERS_COLLECTION.insert_one(new_user)
         return new_user
     except Exception as e:
         print(e)
+
 
 async def get_user_by_email(user_email):
     try:
@@ -26,6 +30,7 @@ async def get_user_by_email(user_email):
     except Exception as e:
         print(e)
 
+
 async def get_user_by_name(user_name):
     try:
         user = USERS_COLLECTION.find_one(user_name)
@@ -33,14 +38,17 @@ async def get_user_by_name(user_name):
     except Exception as e:
         print(e)
 
+
 async def delete_user_by_email(user_email):
     try:
+        user = await get_user_by_email(user_email)
         user = await USERS_COLLECTION.delete_one({"email": user_email})
     except Exception as e:
         print(e)
 
+
 async def update_user_by_email(user_email):
     try:
-        ...
+        user = await get_user_by_email(user_email)
     except Exception as e:
         print(e)
