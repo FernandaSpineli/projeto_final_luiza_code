@@ -1,9 +1,8 @@
 # nome do arquivo simplificado para user.py
-from src.models.entity.address import Address
-from src.models.entity.cart import ShoppingCart, Purchase
+from shopping_cart.src.models.entity.address import Address
+from shopping_cart.src.models.entity.cart import ShoppingCart, Purchase
 from typing import List
 from pydantic import BaseModel
-
 
 class User(BaseModel):
     id: str

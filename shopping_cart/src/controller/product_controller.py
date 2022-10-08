@@ -1,5 +1,7 @@
 from fastapi import APIRouter
-from src.models.entity.product import Product
+
+from shopping_cart.src.models.entity.product import Product
+
 
 product_route = APIRouter(prefix="/api/products")
 

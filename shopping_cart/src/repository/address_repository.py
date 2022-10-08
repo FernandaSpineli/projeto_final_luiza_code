@@ -1,5 +1,5 @@
-from bd import obter_colecao
-from src.models.entity.address import Address
+from shopping_cart.bd import obter_colecao
+from shopping_cart.src.models.entity.address import Address
 
 
 USERS_COLLECTION = obter_colecao("users")

@@ -1,11 +1,11 @@
 
-from src.models.entity.cart import CartProduct, ShoppingCart
+from shopping_cart.src.models.entity.cart import CartProduct, ShoppingCart
 
-from src.repository.user_repository import get_user_by_id
-from src.repository.product_repository import get_product_by_id
+from shopping_cart.src.repository.user_repository import find_user_by_id
+from shopping_cart.src.repository.product_repository import get_product_by_id
 
 # - talvez precise mexer nesta parte do código, até a linha 16
-from bd import obter_colecao
+from shopping_cart.bd import obter_colecao
 
 CARTS_COLLECTION = obter_colecao("carts")
 USERS_COLLECTION = obter_colecao("users")

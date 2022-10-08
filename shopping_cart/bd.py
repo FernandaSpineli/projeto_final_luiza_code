@@ -4,7 +4,7 @@ from motor.motor_asyncio import (
     AsyncIOMotorCollection,
 )
 
-from config import configuracao
+from shopping_cart.config import configuracao
 
 
 def iniciar_cliente_mongo() -> AsyncIOMotorClient:
