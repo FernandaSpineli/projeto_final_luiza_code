@@ -9,6 +9,4 @@ def first_route():
 
 test = first_route()
 
-
-
 app = criar_aplicacao_fastapi()
