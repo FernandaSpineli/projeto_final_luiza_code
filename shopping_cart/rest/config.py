@@ -1,8 +1,7 @@
 from typing import Callable, Tuple
 
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 
 from shopping_cart.src.controller.cart_controller import cart_route, purchases_route
 from shopping_cart.src.controller.product_controller import product_route
@@ -12,7 +11,6 @@ from shopping_cart.src.models.handler_exceptions import (
     not_found_exception,
     conflict_exception
 )
-
 
 def configurar_interceptador_excecoes(app: FastAPI) -> Tuple[Callable]:
     async def interceptador_nao_encontrado_excecao(request: Request):
