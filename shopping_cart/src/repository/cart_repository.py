@@ -2,7 +2,7 @@
 from shopping_cart.src.models.entity.cart import CartProduct, ShoppingCart
 
 from shopping_cart.src.repository.user_repository import find_user_by_id
-from shopping_cart.src.repository.product_repository import get_product_by_id
+from shopping_cart.src.repository.product_repository import find_product_by_id
 
 # - talvez precise mexer nesta parte do código, até a linha 16
 from shopping_cart.bd import obter_colecao
@@ -17,11 +17,11 @@ STATUS_FAIL = "FAIL"
 
 async def add_product_to_cart(user_id: str, cart_product: CartProduct):
     try:
-        user = await get_user_by_id(user_id)
-        validate_user(user)
+        user = await find_user_by_id(user_id)
+       # validate_user(user)
 
-        product = await get_product_by_id(cart_product.product_id)
-        validate_product(product)
+        product = await find_user_by_id(cart_product.product_id)
+       # validate_product(product)
 
         user_cart = await CARTS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         product_list = user_cart["products"]
@@ -61,11 +61,11 @@ async def add_product_to_cart(user_id: str, cart_product: CartProduct):
 
 async def remove_product_type_from_cart(user_id: str, product_id: str):
     try:
-        user = await get_user_by_id(user_id)
-        validate_user(user)
+        user = await find_user_by_id(user_id)
+        #validate_user(user)
 
-        product = await get_product_by_id(product_id)
-        validate_product(product)
+        product = await find_product_by_id(product_id)
+        #validate_product(product)
 
         user_cart = await CARTS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         product_list = user_cart["products"]
@@ -101,11 +101,11 @@ async def remove_product_type_from_cart(user_id: str, product_id: str):
 
 async def remove_product_from_cart(user_id: str, cart_product: CartProduct):
     try:
-        user = await get_user_by_id(user_id)
-        validate_user(user)
+        user = await find_user_by_id(user_id)
+        #validate_user(user)
 
-        product = await get_product_by_id(cart_product.product_id)
-        validate_product(product)
+        product = await find_product_by_id(cart_product.product_id)
+        #validate_product(product)
 
         user_cart = await CARTS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         product_list = user_cart["products"]
@@ -145,8 +145,8 @@ async def remove_product_from_cart(user_id: str, cart_product: CartProduct):
 
 async def clear_cart(user_id: str):
     try:
-        user = await get_user_by_id(user_id)
-        validate_user(user)
+        user = await find_user_by_id(user_id)
+        #validate_user(user)
 
         cart = await USERS_COLLECTION.update_one(
             {"id": user_id},
@@ -162,11 +162,11 @@ async def clear_cart(user_id: str):
 
 async def get_product_on_cart(user_id: str, product_id: str):
     try:
-        user = await get_user_by_id(user_id)
-        validate_user(user)
+        user = await find_user_by_id(user_id)
+        #validate_user(user)
 
-        product = await get_product_by_id(product_id)
-        validate_product(product)
+        product = await find_product_by_id(product_id)
+        #validate_product(product)
 
         user_cart = await CARTS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         product_list = user_cart["products"]
@@ -181,8 +181,8 @@ async def get_product_on_cart(user_id: str, product_id: str):
 
 async def get_cart_products(user_id: str):
     try:
-        user = await get_user_by_id(user_id)
-        validate_user(user)
+        user = await find_user_by_id(user_id)
+        #validate_user(user)
 
         user_cart = await CARTS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         product_list = user_cart["products"]
@@ -246,8 +246,8 @@ async def cart_to_purchase(user_id: str, payment_method: str, delivery_address_i
 
 async def get_purchase_by_id(user_id: str, purchase_id: str):
     try:
-        user = await get_user_by_id(user_id)
-        validate_user(user)
+        user = await find_user_by_id(user_id)
+        #validate_user(user)
 
         user = await USERS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         user_transaction_history = user["transaction_history"]
@@ -262,8 +262,8 @@ async def get_purchase_by_id(user_id: str, purchase_id: str):
 
 async def transaction_history(user_id: str):
     try:
-        user = await get_user_by_id(user_id)
-        validate_user(user)
+        user = await find_user_by_id(user_id)
+        #validate_user(user)
 
         user = await USERS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         user_transaction_history = user["transaction_history"]
