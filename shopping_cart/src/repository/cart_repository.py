@@ -1,15 +1,15 @@
 
-from shopping_cart.src.models.entity.cart import CartProduct, ShoppingCart
+from shopping_cart.src.models.entity.cart_product import CartProduct, ShoppingCart
 
 from shopping_cart.src.repository.user_repository import find_user_by_id
 from shopping_cart.src.repository.product_repository import find_product_by_id
 
 # - talvez precise mexer nesta parte do código, até a linha 16
-from shopping_cart.bd import obter_colecao
+from shopping_cart.bd import get_collection
 
-CARTS_COLLECTION = obter_colecao("carts")
-USERS_COLLECTION = obter_colecao("users")
-PRODUCTS_COLLECTION = obter_colecao("products")
+CARTS_COLLECTION = get_collection("carts")
+USERS_COLLECTION = get_collection("users")
+PRODUCTS_COLLECTION = get_collection("products")
 STATUS_OK = "OK"
 STATUS_FAIL = "FAIL"
 # -

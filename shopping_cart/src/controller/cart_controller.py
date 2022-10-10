@@ -12,7 +12,7 @@ from shopping_cart.src.repository.cart_repository import (
     transaction_history,
 )
 
-from shopping_cart.src.models.entity.cart import CartProduct 
+from shopping_cart.src.models.entity.cart_product import CartProduct 
 
 
 cart_route = APIRouter(prefix="/api/users/{user_id}/shopping-cart")

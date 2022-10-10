@@ -1,37 +1,53 @@
 from typing import List, Optional
 
-from shopping_cart.bd import obter_colecao
+from shopping_cart.bd import get_collection
 
 
-PRODUCTS_COLLECTION = obter_colecao("products")
+PRODUCTS_COLLECTION = get_collection("products")
+STOCK_COLLECTION = get_collection("stocks")
 
 
-# Insere um produto no banco de dados
 async def insert_new_product(new_product: dict) -> dict:
-    await PRODUCTS_COLLECTION.insert_one(new_product)
-    return new_product
-
-# Atualiza um produto pelo código no banco de dados
-async def update_by_id(product_id: str, features: dict) -> bool:
-    result = await PRODUCTS_COLLECTION.update_one({'id': product_id}, {"$set": features})
-    return result.modified_count == 1
-
-# Procura um produto por id no banco de dados
+    try:
+        await PRODUCTS_COLLECTION.insert_one(new_product)
+        stock = {"product_id": new_product["id"], "stock": 0}
+        await STOCK_COLLECTION.insert_one(stock)
+        return new_product
+    except Exception as e:
+        print(e)
+        
+async def update_product_by_id(product_id: str, fields: dict) -> bool:
+    try:
+        result = await PRODUCTS_COLLECTION.update_one({'id': product_id}, {"$set": fields})
+        return result.modified_count == 1
+    except Exception as e:
+        print(e)
+        
 async def find_product_by_id(id: str) -> Optional[dict]:
-    product = await PRODUCTS_COLLECTION.find_one({'id': id })
-    return product
-
-# Procura um ou mais produtos por nome no banco de dados
+    try:
+        product = await PRODUCTS_COLLECTION.find_one({'id': id })
+        return product
+    except Exception as e:
+        print(e)
+        
 async def find_product_by_name(product_name: str) -> List[dict]:
-    cluster = PRODUCTS_COLLECTION.find( {'name': {"$regex": product_name}})    
-    found_products = [
-        product
-        async for product in cluster
-    ]
-    return found_products
-
-# Remoção de um produto do banco de dados'
+    try:
+        products_found = await PRODUCTS_COLLECTION.count_documents(
+        {"name": {"$regex": product_name}}
+        )
+        search = []
+        if products_found:
+            async for product in PRODUCTS_COLLECTION.find({"name": {"$regex": product_name}}):
+                search.append(product)
+        return search
+    except Exception as e:
+        print(e)
+        
 async def remove_product_by_id(product_id: str) -> bool:
-    result = await PRODUCTS_COLLECTION.delete_one({'id': product_id})
-    removed_quantity = result.deleted_count > 0
-    return removed_quantity
+    try:
+        product = await PRODUCTS_COLLECTION.delete_one({'id': product_id})
+        await STOCK_COLLECTION.delete_one({"product_id": product_id})
+        removed_quantity = product.deleted_count > 0
+        return removed_quantity
+    except Exception as e:
+        print(e)
