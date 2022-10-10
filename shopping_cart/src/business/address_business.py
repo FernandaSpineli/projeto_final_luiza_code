@@ -10,25 +10,17 @@ from shopping_cart.src.repository.address_repository import(
 )
 
 async def insert_address(new_address: Address):
-    try:
         duplicated_address = await find_address_by_zipcode(new_address.zipcode)
         if duplicated_address:
             return "O Endereço informado já está sendo usado. Verifique os dados e tente novamente."
         address_dict = new_address.dict()
-        await insert_new_address(address_dict)
-        return "Endereço cadastrado com sucesso."
-    except Exception as e:
-        print(e)
+        address_inserted = await insert_new_address(address_dict)
+        return address_inserted
         
 async def get_user_addresses(user_email):
-    try:
         addresses = await find_user_addresses(user_email)
-        if not addresses:
-            return "Lista de endereços não encontrada."
         return addresses
-    except Exception as e:
-        print(e)
-
+    
 async def get_address_by_zipcode(address_zipcode):
     try:
         address = await find_address_by_zipcode(address_zipcode)

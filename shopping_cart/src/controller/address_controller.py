@@ -1,3 +1,4 @@
+from ctypes import Union
 from typing import List
 from fastapi import APIRouter
 
@@ -13,17 +14,17 @@ from shopping_cart.src.business.address_business import (
 
 
 ADDRESSES_ROUTE = APIRouter(
-    prefix="/api/users"
+    prefix="/magaluJA/users"
 )
 
 
 @ADDRESSES_ROUTE.post("/{user_email}/addresses")
 async def add_address(user_email: str, new_address: Address):
     try:
-        new_address = await insert_address(user_email, new_address)
+        new_address = await insert_address(new_address)
         return new_address
     except Exception as e:
-        return "erro"
+        print(e)
 
 @ADDRESSES_ROUTE.get("/{user_email}/addresses", response_model = List[Address])
 async def get_addresses(user_email: str):
@@ -33,7 +34,7 @@ async def get_addresses(user_email: str):
     except Exception as e:
         return "lista não encontrada"
     
-@ADDRESSES_ROUTE.get("/{user_email}/addresses/{address_zipcode}", response_model= Address)
+@ADDRESSES_ROUTE.get("/{user_email}/addressesa/{address_nickname}", response_model= Address)
 async def get_user_address_by_nickname(user_email: str, address_nickname: str):
     try:
         address = await get_address_by_nickname(address_nickname)
@@ -41,11 +42,13 @@ async def get_user_address_by_nickname(user_email: str, address_nickname: str):
     except Exception as e:
         return "endereço não encontrado"
 
-@ADDRESSES_ROUTE.get("/{user_email}/addresses/{address_zipcode}", response_model= Address)
-async def get_user_address_by_zipcode(user_email: str, address_zipcode: str):
+@ADDRESSES_ROUTE.get("/{user_email}/addresses", response_model= Address)
+async def get_user_address_by_param(user_email: str, parameter: str):
     try:
-        address = await get_address_by_zipcode(address_zipcode)
-        return address
+        if parameter == address.zipcode:
+            address = await get_address_by_zipcode(parameter)
+            return address
+        
     except Exception as e:
         return "endereço não encontrado"
     
