@@ -3,10 +3,10 @@ from typing import Callable, Tuple
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.controller.main_controller import MAIN_ROUTE
-from src.controller.product_controller import PRODUCT_ROUTE
-from src.controller.user_controller import USER_ROUTE
-from src.models.handler_exceptions import (
+from shopping_cart.src.controller.main_controller import MAIN_ROUTE
+from shopping_cart.src.controller.product_controller import PRODUCT_ROUTE
+from shopping_cart.src.controller.user_controller import USER_ROUTE
+from shopping_cart.src.models.handler_exceptions import (
     not_found_exception,
     conflict_exception
 )
