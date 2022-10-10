@@ -9,10 +9,10 @@ STOCK_COLLECTION = get_collection("stocks")
 
 async def insert_new_product(new_product: dict) -> dict:
     try:
-        await PRODUCTS_COLLECTION.insert_one(new_product)
+        product = await PRODUCTS_COLLECTION.insert_one(new_product)
         stock = {"product_id": new_product["id"], "stock": 0}
         await STOCK_COLLECTION.insert_one(stock)
-        return new_product
+        return product
     except Exception as e:
         print(e)
         

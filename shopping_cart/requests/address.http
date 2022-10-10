@@ -1,21 +1,33 @@
 # Adicionar endereço
-POST http://127.0.0.1:8000/001/addresses HTTP/1.1
+POST http://127.0.0.1:8000/nanda123@gmail.com/addresses HTTP/1.1
 content-type: application/json
 
     {
-        "cep": "19453-019",
-        "cidade": "Franca",
-        "estado": "SP",
-        "logradouro": "Rua da Colina",
-        "numero": 2012
+        "user_email": "nanda123@gmail.com",
+        "nickname": "casa",
+        "street": "Rua da Colina",
+        "house_number": 36,
+        "zipcode": "19453-019",
+        "city": "Franca",
+        "state": "SP"
     }
 
 #######################################
 # Buscar endereços
-GET http://127.0.0.1:8000/001/addresses HTTP/1.1
+GET http://127.0.0.1:8000/nanda123@gmail.com/addresses HTTP/1.1
 content-type: application/json
 
 #######################################
-# Deletar endereço
-DELETE  http://127.0.0.1:8000/001/addresses/01 HTTP/1.1
+# Buscar endereço por cep
+GET http://127.0.0.1:8000/nanda123@gmail.com/addresses/19453-019 HTTP/1.1
+content-type: application/json
+
+#######################################
+# Buscar endereço por apelido
+GET http://127.0.0.1:8000/nanda123@gmail.com/addresses/casa HTTP/1.1
+content-type: application/json
+
+#######################################
+# Deletar endereço por cep
+DELETE  http://127.0.0.1:8000/nanda123@gmail.com/addresses/19453-019 HTTP/1.1
 content-type: application/json

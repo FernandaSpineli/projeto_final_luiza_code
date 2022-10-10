@@ -1,78 +1,67 @@
-from fastapi import APIRouter, status
+from typing import List
+from fastapi import APIRouter
 
 from shopping_cart.src.models.entity.address import Address
-from shopping_cart.src.repository.address_repository import (
-    add_new_address,
-    get_address_by_cep,
+from shopping_cart.src.business.address_business import (
+    insert_address,
     get_user_addresses,
-    delete_address
+    get_address_by_zipcode,
+    get_address_by_nickname,
+    remove_address,
+    update_address_by_zipcode
 )
 
-from shopping_cart.src.models.handler_exceptions import(
-    not_found_exception,
-    conflict_exception
-)
 
-route_addresses = APIRouter(
+ADDRESSES_ROUTE = APIRouter(
     prefix="/api/users"
 )
 
 
-user = {
-    "user_id": "001",
-    "nome": "Lu",
-    "email": "ludomagalu@gmail.com",
-    "password": "123luiza#",
-    "addresses": []
-}
-
-addresses = [
-    {
-        "01": {
-            "cep": "13402-356",
-            "cidade": "São Paulo",
-            "estado": "SP",
-            "logradouro": "Rua das Cores",
-            "numero": 352
-        },
-        "02": {
-            "cep": "11672-482",
-            "cidade": "Bauru",
-            "estado": "SP",
-            "logradouro": "Rua dos Lanches",
-            "numero": 90
-        }
-    }
-]
-
-@route_addresses.post("/{user_email}/addresses")
-async def add_address(user_email, new_address: Address):
+@ADDRESSES_ROUTE.post("/{user_email}/addresses")
+async def add_address(user_email: str, new_address: Address):
     try:
-        address = new_address
-        new_address = await add_new_address(user_email, address)
-        return "Novo endereço cadastrado com sucesso."
+        new_address = await insert_address(user_email, new_address)
+        return new_address
     except Exception as e:
         return "erro"
 
-@route_addresses.get("/{user_email}/addresses")
-async def get_addresses(user_email):
+@ADDRESSES_ROUTE.get("/{user_email}/addresses", response_model = List[Address])
+async def get_addresses(user_email: str):
     try:
        user_addresses = await get_user_addresses(user_email)
+       return user_addresses
     except Exception as e:
-        return not_found_exception.entity_not_found(addresses)
+        return "lista não encontrada"
     
-@route_addresses.get("/{user_email}/addresses/{address_cep}")
-async def get_address_by_cep(user_email, address_cep):
-    return "endereço encontrado!"    
-@route_addresses.get("/{user_email}/addresses/delivery")
-async def get_addresses_delivery(user_email):
-    return "endereços que aceitam entrega"
-    
-@route_addresses.put("/{user_email}/addresses/{address_cep}")
-async def update_address(user_email, address_cep):
-    return "endereço atualizado com sucesso!"
+@ADDRESSES_ROUTE.get("/{user_email}/addresses/{address_zipcode}", response_model= Address)
+async def get_user_address_by_nickname(user_email: str, address_nickname: str):
+    try:
+        address = await get_address_by_nickname(address_nickname)
+        return address
+    except Exception as e:
+        return "endereço não encontrado"
 
-@route_addresses.delete("/{user_email}/addresses/{address_cep}")
-async def delete_address(user_email, address_cep):
-     return "deletado"
+@ADDRESSES_ROUTE.get("/{user_email}/addresses/{address_zipcode}", response_model= Address)
+async def get_user_address_by_zipcode(user_email: str, address_zipcode: str):
+    try:
+        address = await get_address_by_zipcode(address_zipcode)
+        return address
+    except Exception as e:
+        return "endereço não encontrado"
+    
+@ADDRESSES_ROUTE.put("/{user_email}/addresses/{address_zipcode}")
+async def update_address(user_email: str, address_zipcode: str, fields: dict):
+    try:
+        new_address = await update_address_by_zipcode(address_zipcode, fields)
+        return new_address
+    except Exception as e:
+        return "erro"
+    
+@ADDRESSES_ROUTE.delete("/{user_email}/addresses/{address_cep}")
+async def delete_address(user_email: str, address_zipcode: str):
+    try:
+        removed_quantity = await remove_address(address_zipcode)
+        return removed_quantity
+    except Exception as e:
+        return "falha"
      
