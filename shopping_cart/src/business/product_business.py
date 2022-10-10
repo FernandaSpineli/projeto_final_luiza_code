@@ -4,7 +4,7 @@ from shopping_cart.src.repository.product_repository import(
     find_product_by_id,
     find_product_by_name,
     remove_product_by_id,
-    update_by_id
+    update_product_by_id
 ) 
 
 # Regras para acrescentar um produto
@@ -24,7 +24,7 @@ async def update_product(product_id, fields):
         product = await find_product_by_id(product_id)
         if not product:
             return "Produto não encontrado"
-        await update_by_id(product_id, fields) 
+        await update_product_by_id(product_id, fields) 
         updeted_product = await find_product_by_id(product_id)
         return updeted_product
     except Exception as e:

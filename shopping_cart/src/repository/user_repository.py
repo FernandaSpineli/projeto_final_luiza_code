@@ -7,8 +7,8 @@ USERS_COLLECTION = get_collection("users")
 
 
 async def insert_new_user(new_user: dict) -> dict:
-        USERS_COLLECTION.insert_one(new_user)
-        return new_user
+        user = await USERS_COLLECTION.insert_one(new_user)
+        return user
 
 async def find_user_by_id(id: str)  -> Optional[dict]:
         user = await USERS_COLLECTION.find_one({"id": id})
