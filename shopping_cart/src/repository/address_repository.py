@@ -1,9 +1,9 @@
-from shopping_cart.bd import obter_colecao
+from shopping_cart.bd import get_collection
 from shopping_cart.src.models.entity.address import Address
 
 
-USERS_COLLECTION = obter_colecao("users")
-ADDRESSES_COLLECTION = obter_colecao("addresses")
+USERS_COLLECTION = get_collection("users")
+ADDRESSES_COLLECTION = get_collection("addresses")
 
 
 async def add_new_address(user_email, newaddress: Address):

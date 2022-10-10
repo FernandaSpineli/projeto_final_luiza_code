@@ -3,11 +3,10 @@ from typing import Callable, Tuple
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from shopping_cart.src.controller.cart_controller import cart_route, purchases_route
-from shopping_cart.src.controller.product_controller import product_route
-from shopping_cart.src.controller.address_controller import route_addresses
-from shopping_cart.src.controller.user_controller import user_route
-from shopping_cart.src.models.handler_exceptions import (
+from src.controller.main_controller import MAIN_ROUTE
+from src.controller.product_controller import PRODUCT_ROUTE
+from src.controller.user_controller import USER_ROUTE
+from src.models.handler_exceptions import (
     not_found_exception,
     conflict_exception
 )
@@ -25,12 +24,9 @@ def configurar_interceptador_excecoes(app: FastAPI) -> Tuple[Callable]:
     )
 
 def configurar_rotas(app: FastAPI):
-    # Publicando as rotas para o FastAPI.
-    app.include_router(cart_route)
-    app.include_router(purchases_route)
-    app.include_router(product_route)
-    app.include_router(route_addresses)
-    app.include_router(user_route) 
+    app.include_router(MAIN_ROUTE)
+    app.include_router(PRODUCT_ROUTE)
+    app.include_router(USER_ROUTE) 
 
 def configurar_api_rest(app: FastAPI):
     app.add_middleware(
