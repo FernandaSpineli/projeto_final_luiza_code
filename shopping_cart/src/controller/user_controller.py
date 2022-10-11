@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from shopping_cart.src.models.entity.user import User
 from shopping_cart.src.business.user_business import (
     insert_user,
-    find_user_by_email,
+    get_user_email,
     delete_user_by_email,
     update_user_by_email,
 )
@@ -17,10 +17,13 @@ async def creat_user(user: User):
     new_user = await insert_user(user)
     return new_user
 
-@USER_ROUTE.get("/{email}")
-async def get_user_by_email(email):
-    user = await find_user_by_email(email)
-    return user
+@USER_ROUTE.get("/{email}", response_model=User)
+async def get_user_by_email(email: str):
+    try:
+        user = await get_user_email(email)
+        return user
+    except Exception as e:
+        return "Usuário não encontrado"
 
 @USER_ROUTE.delete("/{email}")
 async def delete_user(email):
