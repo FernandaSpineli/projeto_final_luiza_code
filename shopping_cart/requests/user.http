@@ -1,32 +1,23 @@
-POST http://127.0.0.1:8000/MagaluJA/users/ HTTP/1.1
+POST http://127.0.0.1:8000/magaluJA/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "email": "pooooooo",
+    "email": "pooo@ooo",
     "name": "Poli",
     "password": "poli123",
-    "addresses": [],
-    "shopping_cart": "vazio",
-    "transaction_history": ["1", "2", "3"]
+    "addresses": []
 }
-
 ####
-PUT http://127.0.0.1:8000/MagaluJA/users/poli0@gmail.com/ HTTP/1.1
+GET http://127.0.0.1:8000/magaluJA/users/pooo@ooo HTTP/1.1
+####
+DELETE http://127.0.0.1:8000/magaluJA/users/pooo@ooo HTTP/1.1
+####
+PUT http://127.0.0.1:8000/magaluJA/users/pooo@ooo HTTP/1.1
 content-type: application/json
 
 {
     "name": "aaaaaaaa",
     "pasword": "aaaaaaaa",
-    "shopping_cart": "aaaaaaaa"
 }
 
 ####
-GET http://127.0.0.1:8000/MagaluJA/users/email/poli001@gmail.com/ HTTP/1.1
-
-####
-
-GET http://127.0.0.1:8000/MagaluJA/users/search/aa/ HTTP/1.1
-
-####
-DELETE http://127.0.0.1:8000/MagaluJA/users/poli001@gmail.com/ HTTP/1.1
-

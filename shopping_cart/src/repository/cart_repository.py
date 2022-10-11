@@ -30,15 +30,16 @@ async def add_product_to_cart(user_id: str, cart_product: CartProduct):
 
         for item in product_list:
             if item["product_id"] == cart_product.product_id:
-                item["amount"] += cart_product.amount
+                item["quantity"] += cart_product.quantity
                 new_product = False
 
         if new_product:
             product_list.append(cart_product)
 
-        price_credit = user_cart["price_credit"] + product.price * cart_product.amount
+        price_credit = user_cart["price_credit"] + \
+            product.price * cart_product.quantity
         price_debit = price_credit * 0.9
-        number_of_items = user_cart["number_of_items"] + cart_product.amount
+        number_of_items = user_cart["number_of_items"] + cart_product.quantity
 
         cart = await CARTS_COLLECTION.update_one(
             {"user_id": user_id},
@@ -62,10 +63,10 @@ async def add_product_to_cart(user_id: str, cart_product: CartProduct):
 async def remove_product_type_from_cart(user_id: str, product_id: str):
     try:
         user = await find_user_by_id(user_id)
-        #validate_user(user)
+        # validate_user(user)
 
         product = await find_product_by_id(product_id)
-        #validate_product(product)
+        # validate_product(product)
 
         user_cart = await CARTS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         product_list = user_cart["products"]
@@ -75,10 +76,12 @@ async def remove_product_type_from_cart(user_id: str, product_id: str):
                 # se produto constar no carrinho
                 product_list.remove(item)
                 price_credit = (
-                    user_cart["price_credit"] - product.price * item["amount"]
+                    user_cart["price_credit"] -
+                    product.price * item["quantity"]
                 )
                 price_debit = price_credit * 0.9
-                number_of_items = user_cart["number_of_items"] - item["amount"]
+                number_of_items = user_cart["number_of_items"] - \
+                    item["quantity"]
 
         cart = await CARTS_COLLECTION.update_one(
             {"user_id": user_id},
@@ -102,27 +105,29 @@ async def remove_product_type_from_cart(user_id: str, product_id: str):
 async def remove_product_from_cart(user_id: str, cart_product: CartProduct):
     try:
         user = await find_user_by_id(user_id)
-        #validate_user(user)
+        # validate_user(user)
 
         product = await find_product_by_id(cart_product.product_id)
-        #validate_product(product)
+        # validate_product(product)
 
         user_cart = await CARTS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         product_list = user_cart["products"]
 
         for item in product_list:
             if item["product_id"] == cart_product.product_id:
-                if item["amount"] <= cart_product.amount:
+                if item["quantity"] <= cart_product.quantity:
                     return remove_product_type_from_cart(
                         user_id, cart_product.product_id
                     )
 
-                item["amount"] -= cart_product.amount
+                item["quantity"] -= cart_product.quantity
                 price_credit = (
-                    user_cart["price_credit"] - product.price * cart_product.amount
+                    user_cart["price_credit"] -
+                    product.price * cart_product.quantity
                 )
                 price_debit = price_credit * 0.9
-                number_of_items = user_cart["number_of_items"] - cart_product.amount
+                number_of_items = user_cart["number_of_items"] - \
+                    cart_product.quantity
 
         cart = await CARTS_COLLECTION.update_one(
             {"user_id": user_id},
@@ -146,7 +151,7 @@ async def remove_product_from_cart(user_id: str, cart_product: CartProduct):
 async def clear_cart(user_id: str):
     try:
         user = await find_user_by_id(user_id)
-        #validate_user(user)
+        # validate_user(user)
 
         cart = await USERS_COLLECTION.update_one(
             {"id": user_id},
@@ -163,10 +168,10 @@ async def clear_cart(user_id: str):
 async def get_product_on_cart(user_id: str, product_id: str):
     try:
         user = await find_user_by_id(user_id)
-        #validate_user(user)
+        # validate_user(user)
 
         product = await find_product_by_id(product_id)
-        #validate_product(product)
+        # validate_product(product)
 
         user_cart = await CARTS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         product_list = user_cart["products"]
@@ -182,7 +187,7 @@ async def get_product_on_cart(user_id: str, product_id: str):
 async def get_cart_products(user_id: str):
     try:
         user = await find_user_by_id(user_id)
-        #validate_user(user)
+        # validate_user(user)
 
         user_cart = await CARTS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         product_list = user_cart["products"]
@@ -211,15 +216,15 @@ async def cart_to_purchase(user_id: str, payment_method: str, delivery_address_i
 
     # #     for item in product_list:
     # #         if item["product_id"] == cart_product.product_id:
-    # #             item["amount"] += cart_product.amount
+    # #             item["quantity"] += cart_product.quantity
     # #             new_product = False
 
     # #     if new_product:
     # #         product_list.append(cart_product)
 
-    # #     price_credit = user_cart["price_credit"] + product.price * cart_product.amount
+    # #     price_credit = user_cart["price_credit"] + product.price * cart_product.quantity
     # #     price_debit = price_credit * 0.9
-    # #     number_of_items = user_cart["number_of_items"] + cart_product.amount
+    # #     number_of_items = user_cart["number_of_items"] + cart_product.quantity
 
     # #     cart = await CARTS_COLLECTION.update_one(
     # #         {"user_id": user_id},
@@ -247,7 +252,7 @@ async def cart_to_purchase(user_id: str, payment_method: str, delivery_address_i
 async def get_purchase_by_id(user_id: str, purchase_id: str):
     try:
         user = await find_user_by_id(user_id)
-        #validate_user(user)
+        # validate_user(user)
 
         user = await USERS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         user_transaction_history = user["transaction_history"]
@@ -263,7 +268,7 @@ async def get_purchase_by_id(user_id: str, purchase_id: str):
 async def transaction_history(user_id: str):
     try:
         user = await find_user_by_id(user_id)
-        #validate_user(user)
+        # validate_user(user)
 
         user = await USERS_COLLECTION.find_one({"user_id": user_id}, {"_id": 0})
         user_transaction_history = user["transaction_history"]
