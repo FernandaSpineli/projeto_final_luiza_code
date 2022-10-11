@@ -1,46 +1,38 @@
-# Cadastrar produto
-POST http://127.0.0.1:8000/magaluJA/products/ HTTP/1.1
+POST http://127.0.0.1:8000/MagaluJA/products/ HTTP/1.1
 content-type: application/json
 
 {
-    "id": "3",
-    "name": "Jogo de Cama Casal Queen - Kit 6 Peças",
-    "description": "O jogo de cama M. F. Enxovais tem o estilo moderno cosmopolita, trazendo em sua composição tons de salmão, bege e azul, facilitando combinações com diversas cores, deixando o quarto mais alegre e confortável com alta qualidade",
+    "id": "00001",
     "category": "Cama",
-    "subcategory": "Jogo de Cama",
-    "brand": "M. F. Enxovais",
-    "color": "Salmão, bege e azul",
-    "fabric": "100% poliéster",
-    "dimensions": "1 Edre m \n- 2 Pse \n- 1 Len",
-    "items_quantity": 6,
-    "price": 295.90
+    "subcategory": "aaaa",
+    "name": "Kit Berço Trança Nuvem de Amor",
+    "description": "Um conjunto completo com tudo o que você precisa para aconchegar e proteger sua menina. O protetor lateral e a cabeceira vêm com zíper, para facilitar a lavagem, e amarril, para fixação no berço. São 9 peças confeccionadas com materiais de qualidade e enchimento fofinho que você vai amar!",
+    "specifications": "01 Edredom de Berço acolchoado em matelassê , 01 Cabeceira bordada com amarril e zíper 65cm larg. x 45cm alt., 01 Protetor lateral estampado de poás com amarril e zíper 1,30m larg. x 28cm alt., 01 Trança Protetora com amarril 1,20m larg. x 15cm alt., 01 Travesseiro 28cm comp. x 20cm larg., 01 Lençol de berço com elástico 1,55m comp. x 1,05m larg., 01 Fronha 35cm comp. x 25cm larg., 01 Mosquiteiro varal de tule 6m comp., 01 Bandô decorativo para mosquiteiro 1,35m larg. x 18cm alt.",
+    "brand": "Grão de Gente",
+    "color": "Rose",
+    "price": 240.26,
+    "picture": ""
 }
 
 ####
-# Atualizar dados do produto
-PUT http://127.0.0.1:8000/magaluJA/products/3 HTTP/1.1
+PUT http://127.0.0.1:8000/MagaluJA/products/00003/ HTTP/1.1
 content-type: application/json
 
 {
-    "name": "toalha de banho megabanhão",
-    "category": "Toalha",
-    "color": "Rosa",
-    "fabric": "100% algodão",
-    "price": 525.99
+    "name": "aaaaaaaa",
+    "category": "aaaaaaaa",
+    "color": "aaaaaaaa",
+    "price": 100000
 }
 
 ####
-# Consultar produto por código
-GET http://127.0.0.1:8000/magaluJA/products/3 HTTP/1.1
-content-type: application/json
+GET http://127.0.0.1:8000/MagaluJA/products/id/00007/ HTTP/1.1
 
 ####
 # Consultar produto por nome
-GET http://127.0.0.1:8000/magaluJA/products/toalha HTTP/1.1
-content-type: application/json
+GET http://127.0.0.1:8000/MagaluJA/products/search/aa/ HTTP/1.1
 
 ####
 # Deletar um produto por código
-DELETE http://127.0.0.1:8000/magaluJA/products/10001 HTTP/1.1
-content-type: application/json
+DELETE http://127.0.0.1:8000/MagaluJA/products/00001/ HTTP/1.1
 

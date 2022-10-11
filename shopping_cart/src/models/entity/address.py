@@ -1,5 +1,5 @@
-from xxlimited import Str
 from pydantic import BaseModel
+
 
 class Address(BaseModel):
     user_email: str
@@ -8,4 +8,4 @@ class Address(BaseModel):
     house_number: int
     zipcode: str
     city: str
-    state: Str
+    state: str

@@ -1,48 +1,38 @@
-# Adicionar endereço
-POST http://127.0.0.1:8000/magaluJA/users/nanda123@gmail.com/addresses HTTP/1.1
+POST http://127.0.0.1:8000/MagaluJA/user-addresses/poli004@gmail.com/ HTTP/1.1
 content-type: application/json
 
-    {
-        "user_email": "nanda123@gmail.com",
-        "nickname": "trabalho",
-        "street": "Rua da Colina",
-        "house_number": 36,
-        "zipcode": "19453-123",
-        "city": "Franca",
-        "state": "SP"
-    }
+{
+    "id": "00003",
+    "name": "Casa",
+    "street": "rua 1",
+    "house_number": "1",
+    "zipcode": "123",
+    "city": "sl",
+    "state": "mg"
+}
 
-#######################################
-# Buscar endereços
-GET http://127.0.0.1:8000/magaluJA/users/nanda123@gmail.com/addresses HTTP/1.1
+####
+GET http://127.0.0.1:8000/MagaluJA/user-addresses/poli004@gmail.com/00001/ HTTP/1.1
+
+####
+PUT http://127.0.0.1:8000/MagaluJA/user-addresses/poli004@gmail.com/00001/ HTTP/1.1
 content-type: application/json
 
-#######################################
-# Buscar endereço por cep
-GET http://127.0.0.1:8000/magaluJA/users/nanda123@gmail.com/addresses?zipcode=1212122 HTTP/1.1
-content-type: application/json
+{
+    "id": "00001",
+    "name": "Casa",
+    "street": "rua 1",
+    "house_number": "11111111111111111111",
+    "zipcode": "123",
+    "city": "sl",
+    "state": "mg"
+}
 
-#######################################
-# Buscar endereço por apelido
-GET http://127.0.0.1:8000/magaluJA/users/nanda123@gmail.com/addresses?nickname=casa HTTP/1.1
-content-type: application/json
+####
+DELETE http://127.0.0.1:8000/MagaluJA/user-addresses/poli004@gmail.com/00001/ HTTP/1.1
 
-#######################################
-# Deletar endereço por cep
-DELETE  http://127.0.0.1:8000/magaluJA/users/nanda123@gmail.com/addresses/19453-019 HTTP/1.1
-content-type: application/json
+######
 
-#######################################
-# Atualizar endereço por cep
-PUT  http://127.0.0.1:8000/magaluJA/users/nanda123@gmail.com/addresses/19453-019 HTTP/1.1
-content-type: application/json
+DELETE http://127.0.0.1:8000/MagaluJA/user-addresses/poli004@gmail.com/ HTTP/1.1
 
- {
-        "user_email": "nanda123@gmail.com",
-        "nickname": "escritorio",
-        "street": "Rua Torta",
-        "house_number": 1032,
-        "zipcode": "19453-019",
-        "city": "São Paulo",
-        "state": "SP"
-    }
+
