@@ -1,8 +1,9 @@
 from shopping_cart.bd import get_collection
 
-
 PRODUCTS_COLLECTION = get_collection("products")
 STOCKS_COLLECTION = get_collection("stocks")
+SHOPPING_CART_COLLECTION = get_collection("shopping-carts")
+USERS_COLLECTION = get_collection("users")
 
 
 async def insert_new_product(new_product: dict):

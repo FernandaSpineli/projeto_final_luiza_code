@@ -55,20 +55,6 @@ async def cart_to_purchase(user_email: str, purchase_id: str, payment_method: st
         price = user_cart["price_debit"]
     else:
         return "Forma de pagamento deve ser 'credit' ou 'debit'."
-    cart_not_updated = False
-
-    for product in products_list:
-        if product != None:
-            product_product_id = product["product_id"]
-            stock = await get_stock_on_bd(product_product_id)
-            if (not stock) or (stock["stock"] == 0):
-                await remove_product_from_cart_on_bd(user_email, product_product_id)
-                cart_not_updated = True
-            if product["quantity"] > stock["stock"]:
-                await update_product_on_cart_on_bd(user_email, {"product_id": product_product_id, "quantity": stock["stock"]})
-                cart_not_updated = True
-            new_stock = stock["stock"] - product["quantity"]
-            await update_stock_on_bd(product_product_id, {"stock": new_stock})
 
     purchase = {}
     purchase["id"] = purchase_id

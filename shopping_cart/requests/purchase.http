@@ -11,6 +11,6 @@ content-type: application/json
 }
 
 #####
-GET http://127.0.0.1:8000/magaluJA/transaction-history/teste1@gmail.com/00006 HTTP/1.1
+GET http://127.0.0.1:8000/magaluJA/transaction-history/poliana@gmail.com/00001 HTTP/1.1
 ####
-GET http://127.0.0.1:8000/magaluJA/transaction-history/teste2@gmail.com/ HTTP/1.1
+GET http://127.0.0.1:8000/magaluJA/transaction-history/poliana@gmail.com/ HTTP/1.1
