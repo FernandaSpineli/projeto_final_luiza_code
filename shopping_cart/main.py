@@ -1,3 +1,3 @@
-from shopping_cart.rest.rest_config import criar_aplicacao_fastapi
+from shopping_cart.rest.rest_config import create_api
 
-app = criar_aplicacao_fastapi()
+app = create_api()

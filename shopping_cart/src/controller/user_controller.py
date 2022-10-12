@@ -24,8 +24,6 @@ async def get_user_by_email(email: str):
 async def delete_user(email):
     return await delete_user_by_email(email)
 
-# ------------------------------------------------------------------------------
-
 
 @USER_ROUTE.put("/{email}")
 async def update_user(email: str, features: dict):

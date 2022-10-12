@@ -1,7 +1,7 @@
-from bd import get_collection
+from shopping_cart.bd import get_collection
 
 
-STOCK_COLLECTION = get_collection("STOCKS")
+STOCK_COLLECTION = get_collection("stocks")
 
 
 async def update_product_quantity_on_bd(product_id: str, sum: dict):

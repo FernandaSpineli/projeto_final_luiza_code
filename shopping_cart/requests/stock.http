@@ -1,13 +1,13 @@
-PUT http://127.0.0.1:8000/MagaluJA/stocks/00001/ HTTP/1.1
+PUT http://127.0.0.1:8000/magaluJA/stocks/0001/ HTTP/1.1
 content-type: application/json
 
 {
-    "stock": -3
+    "stock": 3
 }
 
 #####################
 
-PUT http://127.0.0.1:8000/MagaluJA/stocks/redefine/00001/ HTTP/1.1
+PUT http://127.0.0.1:8000/magaluJA/stocks/redefine/00001/ HTTP/1.1
 content-type: application/json
 
 {

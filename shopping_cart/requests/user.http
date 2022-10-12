@@ -2,10 +2,18 @@ POST http://127.0.0.1:8000/magaluJA/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "email": "pooo@ooo",
-    "name": "Poli",
-    "password": "poli123",
-    "addresses": []
+    "email": "joana@gmail.com",
+    "name": "joana",
+    "password": "joana123",
+    "addresses": [],
+    "shopping_cart":{
+    "user_email": "joana@gmail.com",
+    "products": [],
+    "price_credit": 0.0,
+    "price_debit": 0.0,
+    "number_of_items": 0,
+    "delivery_address_id": ""
+    }
 }
 ####
 GET http://127.0.0.1:8000/magaluJA/users/pooo@ooo HTTP/1.1

@@ -1,8 +1,8 @@
-POST http://127.0.0.1:8000/MagaluJA/products/ HTTP/1.1
+POST http://127.0.0.1:8000/magaluJA/products/ HTTP/1.1
 content-type: application/json
 
 {
-    "id": "00001",
+    "id": "00003",
     "category": "Cama",
     "subcategory": "aaaa",
     "name": "Kit Berço Trança Nuvem de Amor",
@@ -15,7 +15,13 @@ content-type: application/json
 }
 
 ####
-PUT http://127.0.0.1:8000/MagaluJA/products/00003/ HTTP/1.1
+GET http://127.0.0.1:8000/magaluJA/products/00002/ HTTP/1.1
+####
+GET http://127.0.0.1:8000/magaluJA/products/search/Ber/ HTTP/1.1
+####
+DELETE http://127.0.0.1:8000/magaluJA/products/00002/ HTTP/1.1
+####
+PUT http://127.0.0.1:8000/magaluJA/products/00001/ HTTP/1.1
 content-type: application/json
 
 {
@@ -26,13 +32,3 @@ content-type: application/json
 }
 
 ####
-GET http://127.0.0.1:8000/MagaluJA/products/id/00007/ HTTP/1.1
-
-####
-# Consultar produto por nome
-GET http://127.0.0.1:8000/MagaluJA/products/search/aa/ HTTP/1.1
-
-####
-# Deletar um produto por código
-DELETE http://127.0.0.1:8000/MagaluJA/products/00001/ HTTP/1.1
-

@@ -3,8 +3,9 @@ from typing import List
 
 from shopping_cart.src.models.entity.cart_product import CartProduct
 
+
 class ShoppingCart(BaseModel):
-    user_id: str
+    user_email: str
     products: List[CartProduct] = []
     price_credit: float = 0.0
     price_debit: float = 0.0

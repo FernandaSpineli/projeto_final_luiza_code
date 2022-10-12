@@ -1,8 +1,8 @@
 from typing import List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from shopping_cart.src.models.entity.address import Address
-#from shopping_cart.src.models.entity.cart_product import ShoppingCart, Purchase
+from shopping_cart.src.models.entity.shopping_cart import ShoppingCart
 
 
 class User(BaseModel):
@@ -10,5 +10,5 @@ class User(BaseModel):
     email: str
     password: str
     addresses: List[Address] = []
- #   shopping_cart: ShoppingCart
+    shopping_cart: ShoppingCart
  #   transaction_history: List[Purchase] = []
