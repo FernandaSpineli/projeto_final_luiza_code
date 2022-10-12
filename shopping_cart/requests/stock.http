@@ -2,7 +2,7 @@ PUT http://127.0.0.1:8000/magaluJA/stocks/00001/ HTTP/1.1
 content-type: application/json
 
 {
-    "stock": -10
+    "stock": 5.5
 }
 
 #####################
@@ -11,7 +11,7 @@ PUT http://127.0.0.1:8000/magaluJA/stocks/redefine/00001/ HTTP/1.1
 content-type: application/json
 
 {
-    "stock": 10
+    "stock": 0
 }
 
 #####################

@@ -7,10 +7,10 @@ from shopping_cart.src.business.shopping_cart_business import (
     find_cart,
     remove_product_from_cart,
     clear_cart,
-    update_product_on_cart
+    update_product_on_cart,
+    cart_to_purchase
 )
 # adicionar função definir endereço de entrega
-# adicionar função de fechar compra
 
 SHOPPING_CART_ROUTE = APIRouter(prefix="/magaluJA/shopping-cart/{user_email}")
 
@@ -18,6 +18,11 @@ SHOPPING_CART_ROUTE = APIRouter(prefix="/magaluJA/shopping-cart/{user_email}")
 @SHOPPING_CART_ROUTE.post("/")
 async def post_product_on_cart(user_email: str, cart_product: CartProduct):
     return await add_product_to_cart(user_email, cart_product)
+
+
+@SHOPPING_CART_ROUTE.post("/transaction-history/{purchase_id}/{payment_method}")
+async def post_cart_to_purchase(user_email: str, purchase_id: str, payment_method: str):
+    return await cart_to_purchase(user_email, purchase_id, payment_method)
 
 
 @SHOPPING_CART_ROUTE.get("/products/{product_id}")

@@ -8,14 +8,17 @@ from shopping_cart.src.repository.shopping_cart_repository import (
     clear_cart_on_bd,
     update_product_on_cart_on_bd
 )
+from shopping_cart.src.repository.purchase_repository import create_new_purchase_on_bd
 from shopping_cart.src.repository.user_repository import (
     find_user_by_email,
 )
 from shopping_cart.src.repository.product_repository import (
     find_product_by_id_on_bd,
 )
+from shopping_cart.src.repository.purchase_repository import find_purchase_by_id_on_bd
+from shopping_cart.src.repository.stock_repository import get_stock_on_bd, update_stock_on_bd
+
 # adicionar função definir endereço de entrega
-# adicionar função de fechar compra
 
 
 async def add_product_to_cart(user_email: str, cart_product: CartProduct):
@@ -24,6 +27,9 @@ async def add_product_to_cart(user_email: str, cart_product: CartProduct):
         if user:
             product = await find_product_by_id_on_bd(cart_product.product_id)
             if product:
+                if cart_product.quantity < 0:
+                    return "A quantidade de produto inserida deve ser um numero inteiro positivo."
+                cart_product.quantity = int(cart_product.quantity)
                 cart_product_dict = cart_product.dict()
                 check = await add_product_to_cart_on_bd(user_email, cart_product_dict)
                 if check:
@@ -33,6 +39,49 @@ async def add_product_to_cart(user_email: str, cart_product: CartProduct):
         return "Nenhum usuário cadastrado com o e-mail informado."
     except Exception as e:
         print(e)
+
+
+async def cart_to_purchase(user_email: str, purchase_id: str, payment_method: str):
+    user_cart = await find_cart_on_bd(user_email)
+    products_list = user_cart["products"]
+    if not products_list:
+        return "Adicione pelo menos um item ao carrinho para fechar a compra."
+    duplicated_purchase = await find_purchase_by_id_on_bd(user_email, purchase_id)
+    if duplicated_purchase:
+        return "ID informado já cadastrado em outra compra."
+    if payment_method == "credit":
+        price = user_cart["price_credit"]
+    elif payment_method == "debit":
+        price = user_cart["price_debit"]
+    else:
+        return "Forma de pagamento deve ser 'credit' ou 'debit'."
+    cart_not_updated = False
+
+    for product in products_list:
+        if product != None:
+            product_product_id = product["product_id"]
+            stock = await get_stock_on_bd(product_product_id)
+            if (not stock) or (stock["stock"] == 0):
+                await remove_product_from_cart_on_bd(user_email, product_product_id)
+                cart_not_updated = True
+            if product["quantity"] > stock["stock"]:
+                await update_product_on_cart_on_bd(user_email, {"product_id": product_product_id, "quantity": stock["stock"]})
+                cart_not_updated = True
+            new_stock = stock["stock"] - product["quantity"]
+            await update_stock_on_bd(product_product_id, {"stock": new_stock})
+
+    purchase = {}
+    purchase["id"] = purchase_id
+    purchase["products"] = products_list
+    purchase["price"] = price
+    purchase["number_of_items"] = user_cart["number_of_items"]
+    purchase["delivery_address_id"] = user_cart["delivery_address_id"]
+    purchase["payment_method"] = payment_method
+    check = await create_new_purchase_on_bd(user_email, purchase)
+    await clear_cart_on_bd(user_email)
+    if check:
+        return "Compra realizada com sucesso."
+    return "Erro ao fechar sua compra"
 
 
 async def find_product_on_cart(user_email: str, product_id: str):

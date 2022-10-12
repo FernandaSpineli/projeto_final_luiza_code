@@ -3,6 +3,7 @@ from shopping_cart.src.repository.stock_repository import get_stock_on_bd, updat
 
 
 async def update_product_quantity(product_id: str, sum: dict):
+    sum["stock"] = int(sum["stock"])
     product = await find_product_by_id_on_bd(product_id)
     stock = await get_stock_on_bd(product_id)
     stock_stock = stock["stock"]
@@ -13,10 +14,11 @@ async def update_product_quantity(product_id: str, sum: dict):
             return "Estoque atualizado com sucesso."
         return "Nenhum produto cadastrado com o ID informado."
     sum_stock = abs(sum["stock"])
-    return f"Voce está tentando comprar {sum_stock} produto(s) {product_id}. Existe(m) {stock_stock} disponível(is) no estoque."
+    return f"Voce está tentando comprar {sum_stock} unidade(s) do produto {product_id}. Existe(m) {stock_stock} disponível(is) no estoque."
 
 
 async def update_stock(product_id: str, quantity: dict):
+    quantity["stock"] = int(quantity["stock"])
     product = await find_product_by_id_on_bd(product_id)
     if product:
         if quantity["stock"] < 0:

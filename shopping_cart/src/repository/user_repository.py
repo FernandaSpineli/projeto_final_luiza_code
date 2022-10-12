@@ -1,5 +1,4 @@
 from shopping_cart.bd import get_collection
-from shopping_cart.src.repository.shopping_cart_repository import SHOPPING_CART_COLLECTION
 
 USERS_COLLECTION = get_collection("users")
 SHOPPING_CART_COLLECTION = get_collection("shopping-cart")

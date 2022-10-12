@@ -1,13 +1,14 @@
+#cria um usuário
 POST http://127.0.0.1:8000/magaluJA/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "email": "mari1@gmail.com",
-    "name": "mari",
-    "password": "mari",
+    "email": "poliana@gmail.com",
+    "name": "poli",
+    "password": "poli",
     "addresses": [],
     "shopping_cart":{
-        "user_email": "mari1@gmail.com",
+        "user_email": "poliana@gmail.com",
         "products": [],
         "price_credit": 0.0,
         "price_debit": 0.0,
@@ -15,16 +16,32 @@ content-type: application/json
         "delivery_address_id": ""
         },
     "transaction_history":{
-        "user_email": "mari1@gmail.com",
+        "user_email": "poliana@gmail.com",
         "transaction_history": []
     }
 }
 ####
-GET http://127.0.0.1:8000/magaluJA/users/mari1@gmail.com HTTP/1.1
+
+
+
+
+#pesquisa usuario
+GET http://127.0.0.1:8000/magaluJA/users/taila@gmail.com HTTP/1.1
 ####
-DELETE http://127.0.0.1:8000/magaluJA/users/mari@gmail.com HTTP/1.1
+
+
+
+
+#deleta usuario
+DELETE http://127.0.0.1:8000/magaluJA/users/taila@gmail.com HTTP/1.1
+
+
+
+
+
 ####
-PUT http://127.0.0.1:8000/magaluJA/users/mari@gmail.com HTTP/1.1
+# atualiza usuario
+PUT http://127.0.0.1:8000/magaluJA/users/taila@gmail.com HTTP/1.1
 content-type: application/json
 
 {

@@ -57,6 +57,8 @@ async def update_product_by_id(product_id: str, fields: dict):
     try:
         product = await find_product_by_id_on_bd(product_id)
         if product:
+            if "id" in fields:
+                return "Não é possível alterar o ID do produto."
             check = await update_product_by_id_on_bd(product_id, fields)
             if check:
                 return "Produto atualizado com sucesso."

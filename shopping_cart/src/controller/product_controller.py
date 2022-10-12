@@ -10,6 +10,7 @@ from shopping_cart.src.business.product_business import (
     update_product_by_id,
     delete_product_by_id,
 )
+
 PRODUCT_ROUTE = APIRouter(prefix="/magaluJA/products")
 
 

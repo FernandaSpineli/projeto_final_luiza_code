@@ -1,21 +1,21 @@
-POST http://127.0.0.1:8000/magaluJA/shopping-cart/joana@gmail.com/ HTTP/1.1
+POST http://127.0.0.1:8000/magaluJA/shopping-cart/poliana@gmail.com/ HTTP/1.1
 content-type: application/json
 
 {
-    "product_id": "00003",
-    "quantity": 4
+    "product_id": "00002",
+    "quantity": 2
 }
 ####
 GET http://127.0.0.1:8000/magaluJA/shopping-cart/taila004@gmail.com/products/00001 HTTP/1.1
 ####
 GET http://127.0.0.1:8000/magaluJA/shopping-cart/mari001@gmail.com/products/ HTTP/1.1
 ####
-GET http://127.0.0.1:8000/magaluJA/shopping-cart/joana@gmail.com/ HTTP/1.1
+GET http://127.0.0.1:8000/magaluJA/shopping-cart/mari1@gmail.com/ HTTP/1.1
 ####
 
 DELETE http://127.0.0.1:8000/magaluJA/shopping-cart/joana@gmail.com/00003/ HTTP/1.1
 ####
-DELETE http://127.0.0.1:8000/magaluJA/shopping-cart/joana@gmail.com/ HTTP/1.1
+DELETE http://127.0.0.1:8000/magaluJA/shopping-cart/poliana@gmail.com/ HTTP/1.1
 ####
 PUT http://127.0.0.1:8000/magaluJA/shopping-cart/joana@gmail.com/ HTTP/1.1
 content-type: application/json
@@ -25,3 +25,5 @@ content-type: application/json
     "quantity": -1
 }
 ####
+
+POST http://127.0.0.1:8000/magaluJA/shopping-cart/poliana@gmail.com/transaction-history/00001/credit HTTP/1.1
