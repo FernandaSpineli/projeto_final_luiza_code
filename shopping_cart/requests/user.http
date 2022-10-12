@@ -3,30 +3,28 @@ POST http://127.0.0.1:8000/magaluJA/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "id": 223,
-    "name": "Maria da Silva",
-    "email": "jjj@gmail.com",
-    "password": "maria1234",
-    "addresses": []
+    "email": "fernanda5@gmail.com",
+    "name": "fernanda",
+    "password": "123"
 }
 
 ### Consultar usuário por email
-GET http://127.0.0.1:8000/api/user/mariadasilva@gmail.com HTTP/1.1
+GET http://127.0.0.1:8000/magaluJA/users/fernada5@gmail.com HTTP/1.1
 content-type: application/json
 
 
 ####S Consultar usuário por nome
-GET http://127.0.0.1:8000/api/user/Maria+da+Silva HTTP/1.1
+GET http://127.0.0.1:8000/magaluJA/users/Maria+da+Silva HTTP/1.1
 content-type: application/json
 
 
 # Deletar usuário por email
-DELETE http://127.0.0.1:8000/api/user/mariadasilva@gmail.com HTTP/1.1
+DELETE http://127.0.0.1:8000/magaluJA/users/mariadasilva@gmail.com HTTP/1.1
 content-type: application/json
 
 
 # Atualizar usuário por email
-PUT http://127.0.0.1:8000/api/user/mariadasilva@gmail.com HTTP/1.1
+PUT http://127.0.0.1:8000/magaluJA/users/mariadasilva@gmail.com HTTP/1.1
 content-type: application/json
 
 {

@@ -1,4 +1,3 @@
-from ast import Expression
 from typing import List, Optional
 
 from shopping_cart.bd import get_collection

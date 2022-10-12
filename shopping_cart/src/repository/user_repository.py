@@ -13,11 +13,11 @@ async def insert_new_user(new_user: dict):
     transaction_history = {
         "user_email": new_user["email"], "transaction_history": []}
     await TRANSACTION_HISTORY_COLLECTION.insert_one(transaction_history)
-    await USERS_COLLECTION.insert_one(new_user)
+    return await USERS_COLLECTION.insert_one(new_user)
 
 
 async def find_user_by_email(email: str):
-    return await USERS_COLLECTION.find_one({"email": email}, {"_id": 0})
+    return await USERS_COLLECTION.find_one({"email": email})
 
 
 async def remove_user_by_email(user_email: str):

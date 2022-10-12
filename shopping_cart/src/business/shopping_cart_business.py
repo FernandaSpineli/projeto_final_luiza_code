@@ -12,7 +12,7 @@ from shopping_cart.src.repository.user_repository import (
     find_user_by_email,
 )
 from shopping_cart.src.repository.product_repository import (
-    find_product_by_id_on_bd,
+    find_product_by_code,
 )
 # adicionar função definir endereço de entrega
 # adicionar função de fechar compra
@@ -22,7 +22,7 @@ async def add_product_to_cart(user_email: str, cart_product: CartProduct):
     try:
         user = await find_user_by_email(user_email)
         if user:
-            product = await find_product_by_id_on_bd(cart_product.product_id)
+            product = await find_product_by_code(cart_product.product_id)
             if product:
                 cart_product_dict = cart_product.dict()
                 check = await add_product_to_cart_on_bd(user_email, cart_product_dict)
@@ -39,7 +39,7 @@ async def find_product_on_cart(user_email: str, product_id: str):
     try:
         user = await find_user_by_email(user_email)
         if user:
-            product = await find_product_by_id_on_bd(product_id)
+            product = await find_product_by_code(product_id)
             if product:
                 product_found = await find_product_on_cart_on_bd(user_email, product_id)
                 if product_found:
@@ -78,7 +78,7 @@ async def remove_product_from_cart(user_email: str, product_id: str):
     try:
         user = await find_user_by_email(user_email)
         if user:
-            product = await find_product_by_id_on_bd(product_id)
+            product = await find_product_by_code(product_id)
             if product:
                 check = await remove_product_from_cart_on_bd(user_email, product_id)
                 if check:
@@ -106,7 +106,7 @@ async def update_product_on_cart(user_email: str, cart_product: CartProduct):
     try:
         user = await find_user_by_email(user_email)
         if user:
-            product = await find_product_by_id_on_bd(cart_product.product_id)
+            product = await find_product_by_code(cart_product.product_id)
             if product:
                 cart_product_dict = cart_product.dict()
                 check = await update_product_on_cart_on_bd(user_email, cart_product_dict)

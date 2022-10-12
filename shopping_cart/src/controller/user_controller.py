@@ -8,11 +8,15 @@ from shopping_cart.src.business.user_business import (
     find_user_by_email,
     delete_user_by_email
 )
+from shopping_cart.src.models.exceptions.exceptions import Bad_Request_Exception
 USER_ROUTE = APIRouter(prefix="/magaluJA/users")
 
 
 @USER_ROUTE.post("/")
 async def creat_user(user: User):
+    if "@" not in user.email or len(user.email) < 4:
+        raise Bad_Request_Exception('E-mail inválido')
+    
     new_user = await insert_user(user)
     result = jsonable_encoder(new_user)
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=result)

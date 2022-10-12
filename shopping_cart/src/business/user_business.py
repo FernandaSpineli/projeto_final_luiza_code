@@ -15,13 +15,14 @@ async def insert_user(new_user: User):
 
     try:
         user_dict = new_user.dict()
-        user_inserted = await insert_new_user(user_dict)
-
-        user = UserResponse(
-        name=user_inserted['name'],
-        email=user_inserted['email']
-        )
-        return user
+        response_db = await insert_new_user(user_dict)
+        
+        if response_db.inserted_id:
+            user = UserResponse(
+                name=new_user.name,
+                email=new_user.email
+            )
+            return user
     except Exception as e:
         raise Server_Exception(f'Erro ao cadastrar usuário - {str(e)}')
         

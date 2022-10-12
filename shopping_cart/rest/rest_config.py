@@ -6,13 +6,16 @@ from shopping_cart.src.controller.main_controller import MAIN_ROUTE
 from shopping_cart.src.controller.product_controller import PRODUCT_ROUTE
 from shopping_cart.src.controller.user_controller import USER_ROUTE
 from shopping_cart.src.controller.address_controller import ADDRESSES_ROUTE
+from shopping_cart.src.controller.stock_controller import STOCK_ROUTE
+from shopping_cart.src.controller.shopping_cart_controller import SHOPPING_CART_ROUTE
+from shopping_cart.src.controller.purchase_controller import TRANSACTION_HISTORY_ROUTE
 from shopping_cart.src.models.exceptions.exceptions import Bad_Request_Exception, Duplicated_Exception, Not_Found_Exception, Server_Exception
 
-def criar_aplicacao_fastapi():
+def create_api():
     app = FastAPI()
 
-    configurar_api_rest(app)
-    configurar_rotas(app)
+    rest_config(app)
+    route_config(app)
 
     return app
 

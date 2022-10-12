@@ -1,9 +1,9 @@
-from shopping_cart.src.repository.product_repository import find_product_by_id_on_bd
+from shopping_cart.src.repository.product_repository import find_product_by_code
 from shopping_cart.src.repository.stock_repository import get_stock_on_bd, update_product_quantity_on_bd, update_stock_on_bd
 
 
 async def update_product_quantity(product_id: str, sum: dict):
-    product = await find_product_by_id_on_bd(product_id)
+    product = await find_product_by_code(product_id)
     stock = await get_stock_on_bd(product_id)
     stock_stock = stock["stock"]
     quantity = stock_stock + sum["stock"]
@@ -17,7 +17,7 @@ async def update_product_quantity(product_id: str, sum: dict):
 
 
 async def update_stock(product_id: str, quantity: dict):
-    product = await find_product_by_id_on_bd(product_id)
+    product = await find_product_by_code(product_id)
     if product:
         if quantity["stock"] < 0:
             return "Estoque não aceita quantidade negativa."
