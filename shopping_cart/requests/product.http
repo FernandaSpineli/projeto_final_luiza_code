@@ -2,33 +2,37 @@ POST http://127.0.0.1:8000/magaluJA/products/ HTTP/1.1
 content-type: application/json
 
 {
-    "id": "00005",
+    "code": "3333333",
+    "name": "Toalha de banho",
+    "description": "O jogo de cama",
     "category": "Cama",
-    "subcategory": "aaaa",
-    "name": "Kit Berço Trança Nuvem de Amor",
-    "description": "Um conjunto completo com tudo o que você precisa para aconchegar e proteger sua menina. O protetor lateral e a cabeceira vêm com zíper, para facilitar a lavagem, e amarril, para fixação no berço. São 9 peças confeccionadas com materiais de qualidade e enchimento fofinho que você vai amar!",
-    "specifications": "01 Edredom de Berço acolchoado em matelassê , 01 Cabeceira bordada com amarril e zíper 65cm larg. x 45cm alt., 01 Protetor lateral estampado de poás com amarril e zíper 1,30m larg. x 28cm alt., 01 Trança Protetora com amarril 1,20m larg. x 15cm alt., 01 Travesseiro 28cm comp. x 20cm larg., 01 Lençol de berço com elástico 1,55m comp. x 1,05m larg., 01 Fronha 35cm comp. x 25cm larg., 01 Mosquiteiro varal de tule 6m comp., 01 Bandô decorativo para mosquiteiro 1,35m larg. x 18cm alt.",
-    "brand": "Grão de Gente",
-    "color": "Rose",
-    "price": 240.26,
-    "picture": ""
+    "price": 295.90
 }
 
 ####
-GET http://127.0.0.1:8000/magaluJA/products/00002/ HTTP/1.1
-####
-GET http://127.0.0.1:8000/magaluJA/products/search/ber/ HTTP/1.1
-####
-DELETE http://127.0.0.1:8000/magaluJA/products/00005/ HTTP/1.1
-####
-PUT http://127.0.0.1:8000/magaluJA/products/00001/ HTTP/1.1
+# Atualizar dados do produto
+PUT http://127.0.0.1:8000/magaluJA/products/3333333 HTTP/1.1
 content-type: application/json
 
 {
-    "name": "aaaaaaaa",
-    "category": "aaaaaaaa",
-    "color": "aaaaaaaa",
-    "price": 100000
+    "name": "toalha de banho megabanhão dd",
+    "category": "Toalha",
+    "description": "Toalha 5000 fibras",
+    "price": 525.99
 }
 
 ####
+# Consultar produto por código
+GET http://127.0.0.1:8000/magaluJA/products?product_code=3333333 HTTP/1.1
+content-type: application/json
+
+####
+# Consultar produto por nome
+GET http://127.0.0.1:8000/magaluJA/products?product_name=oa HTTP/1.1
+content-type: application/json
+
+####
+# Deletar um produto por código
+DELETE http://127.0.0.1:8000/magaluJA/products/10001 HTTP/1.1
+content-type: application/json
+

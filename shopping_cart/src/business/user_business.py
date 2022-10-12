@@ -1,4 +1,5 @@
-from shopping_cart.src.models.entity.user import User
+from shopping_cart.src.models.entity.user import User, UserResponse
+from shopping_cart.src.models.exceptions.exceptions import Duplicated_Exception, Server_Exception
 from shopping_cart.src.repository.user_repository import (
     insert_new_user,
     find_user_by_email,
@@ -8,22 +9,24 @@ from shopping_cart.src.repository.user_repository import (
 
 
 async def insert_user(new_user: User):
+    exist_user = await find_user_by_email(new_user.email)
+    if exist_user:
+        raise Duplicated_Exception('Usuário já cadastrado')
+
     try:
-        if "@" not in new_user.email or len(new_user.email) < 4:
-            return "E-mail inválido"
-        if (new_user.email != new_user.shopping_cart.user_email) or (new_user.email != new_user.transaction_history.user_email):
-            return "E-mail deve ser o mesmo para o usuário, carrinho e histórico de compras."
-        duplicated_email = await find_user_by_email(new_user.email)
-        if duplicated_email:
-            return "O E-mail informado já está sendo usado. Verifique os dados e tente novamente."
-        new_user_dict = new_user.dict()
-        await insert_new_user(new_user_dict)
-        return "Usuário cadastrado com sucesso."
+        user_dict = new_user.dict()
+        user_inserted = await insert_new_user(user_dict)
+
+        user = UserResponse(
+        name=user_inserted['name'],
+        email=user_inserted['email']
+        )
+        return user
     except Exception as e:
-        print(e)
-
-
-async def get_user_email(email: str):
+        raise Server_Exception(f'Erro ao cadastrar usuário - {str(e)}')
+        
+        
+async def get_user_by_id(user_id: str):
     try:
         found_user_dict = await find_user_by_email(email)
         if found_user_dict:

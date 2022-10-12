@@ -1,67 +1,76 @@
-from shopping_cart.src.models.entity.product import Product
-from shopping_cart.src.repository.product_repository import (
+from shopping_cart.src.models.entity.product import Product, ProductResponse
+
+from shopping_cart.src.models.exceptions.exceptions import Bad_Request_Exception, Duplicated_Exception, Not_Found_Exception, Server_Exception
+from shopping_cart.src.repository.product_repository import(
     insert_new_product,
-    find_product_by_id_on_bd,
-    find_product_by_name_on_bd,
+    find_product_by_code,
+    find_product_by_name,
     remove_product_by_id,
-    update_product_by_id_on_bd
-)
+    update_product_by_code_db,
+) 
 
-
-async def create_new_product(new_product: Product):
+async def create_product(new_product: Product):
+    exist_product = await find_product_by_code(new_product.code)
+    if exist_product:
+        raise Duplicated_Exception('Produto já cadastrado')
     try:
-        duplicated_product = await find_product_by_id_on_bd(new_product.id)
-        if duplicated_product:
-            return "O ID informado já está sendo usado. Verifique os dados e tente novamente."
         product_dict = new_product.dict()
-        await insert_new_product(product_dict)
-        return "Produto cadastrado com sucesso."
+        product_inserted = await insert_new_product(product_dict)
+        
+        product = ProductResponse(
+            code = product_inserted['code'],
+            name = product_inserted['name'],
+            description = product_inserted['description'],
+            category = product_inserted['category'],
+            price = product_inserted['price'],
+        )
+        return product
     except Exception as e:
-        print(e)
-
-
-async def find_product_by_id(product_id: str):
-    try:
-        product = await find_product_by_id_on_bd(product_id)
+        raise Server_Exception(f'Erro ao cadastrar produto - {str(e)}')
+    
+        
+# Regras para pesquisar um produto na base de dados pelo id
+async def get_product(product_code, product_name):
+    response = []
+    if product_code:
+        product = await find_product_by_code(product_code)
         if product:
-            return product
-        return "Produto não encontrado"
-    except Exception as e:
-        print(e)
+            response.append(product)
+    else:
+        response = await find_product_by_name(product_name)
+        
+    if len(response) > 0:
+        return response
+    
+    raise Not_Found_Exception('Produto não encontrado')
+        
+# Regras para remover um produto da base de dados
+async def delete_product(product_id):
+        product = await find_product_by_code(product_id)
+        if not product:
+            return "Produto não encontrado"
+        removed_quantity = await remove_product_by_id(product_id)
+        return removed_quantity
 
-
-async def find_product_by_name(product_name):
+async def update_product_by_code(product_code, fields):
+    exist_product = await find_product_by_code(product_code)
+    if not exist_product:
+        raise Bad_Request_Exception("O produto informado não está cadastrado")
+    
     try:
-        products = await find_product_by_name_on_bd(product_name)
-        if products:
-            return products
-        return "Nenhum resultado corresponde busca."
+        updated = await update_product_by_code_db(product_code, fields)
+        if updated == False:
+            raise Server_Exception('Erro ao atualizar o produto')
+        
+        updated_product = await find_product_by_code(product_code)
+        product = ProductResponse(
+            code = updated_product['code'],
+            name = updated_product['name'],
+            description = updated_product['description'],
+            category = updated_product['category'],
+            price = updated_product['price']
+        )
+        return product
     except Exception as e:
-        print(e)
-
-
-async def delete_product_by_id(product_id: str):
-    try:
-        product = await find_product_by_id_on_bd(product_id)
-        if product:
-            check = await remove_product_by_id(product_id)
-            if check:
-                return "Produto excluido com sucesso."
-            return "Erro ao excluir usuário"
-        return "Nenhum produto cadastrado com o ID encontrado"
-    except Exception as e:
-        print(e)
-
-
-async def update_product_by_id(product_id: str, fields: dict):
-    try:
-        product = await find_product_by_id_on_bd(product_id)
-        if product:
-            check = await update_product_by_id_on_bd(product_id, fields)
-            if check:
-                return "Produto atualizado com sucesso."
-            print(product)
-            return "Erro ao atualizar produto."
-        return "Produto não encontrado."
-    except Exception as e:
-        print(e)
+        raise Server_Exception(f'Erro ao atualizar produto - {str(e)}')
+        

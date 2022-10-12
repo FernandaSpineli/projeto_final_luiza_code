@@ -1,13 +1,20 @@
 from pydantic import BaseModel
 
 class Product(BaseModel):
-    id: str
-    category: str
-    subcategory: str
+    code: str 
     name: str
     description: str
-    specifications: str
-    brand: str
-    color: str
+    category: str
     price: float
-    picture: str
+    subcategory: str = None
+    specifications: str = None
+    brand: str = None 
+    color: str = None
+    picture: str = None
+    
+class ProductResponse(BaseModel):
+    code: str 
+    name: str
+    description: str
+    category: str
+    price: float

@@ -7,9 +7,16 @@ from shopping_cart.src.models.entity.transaction_history import TransactionHisto
 
 
 class User(BaseModel):
+    id: str
     name: str
     email: str
-    password: str
+    password: str = None
     addresses: List[Address] = []
     shopping_cart: ShoppingCart
     transaction_history: TransactionHistory
+ #   shopping_cart: ShoppingCart
+ #   transaction_history: List[Purchase] = []
+
+class UserResponse(BaseModel):
+    name: str
+    email: str

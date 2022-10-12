@@ -1,38 +1,41 @@
-from typing import List
-
-from fastapi import APIRouter
+from fastapi import APIRouter, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 
 from shopping_cart.src.models.entity.product import Product
-from shopping_cart.src.business.product_business import (
-    create_new_product,
-    find_product_by_id,
-    find_product_by_name,
-    update_product_by_id,
-    delete_product_by_id,
+from shopping_cart.src.business.product_business import(
+    create_product,
+    get_product,
+    update_product_by_code
 )
+from shopping_cart.src.models.exceptions.exceptions import Bad_Request_Exception, Not_Found_Exception
+
+
 PRODUCT_ROUTE = APIRouter(prefix="/magaluJA/products")
 
-
+ 
+# Cadastrar produto
 @PRODUCT_ROUTE.post("/")
 async def post_product(product: Product):
-    return await create_new_product(product)
+    new_product = await create_product(product)
+    result = jsonable_encoder(new_product)
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=result)
 
-
-@PRODUCT_ROUTE.get("/{id}")
-async def get_product_by_id(id: str):
-    return await find_product_by_id(id)
-
-
-@PRODUCT_ROUTE.get("/search/{name}")  # , response_model=List[Product])
-async def get_product_by_name(name: str):
-    return await find_product_by_name(name)
-
-
-@PRODUCT_ROUTE.delete("/{id}")
-async def delete_product(id: str):
-    return await delete_product_by_id(id)
-
-
-@PRODUCT_ROUTE.put("/{id}")
-async def update_product(id: str, features: dict):
-    return await update_product_by_id(id, features)
+# Pesquisar produto pelo código ou nome
+@PRODUCT_ROUTE.get("/")
+async def get_product_by_code_or_name(product_code: str = '', product_name: str = ''):
+    if product_code == '' and product_name == '':
+      raise Bad_Request_Exception('Precisa ser passado o código ou nome do produto')
+  
+    product = await get_product(product_code, product_name)
+    if not product:
+            raise Bad_Request_Exception('Produto não existe no banco de dados.')
+    result = jsonable_encoder(product)
+    return JSONResponse(status_code=status.HTTP_200_OK, content=result)
+        
+ # Atualizar dados do produto
+@PRODUCT_ROUTE.put("/{product_code}")
+async def update_product(product_code: str, fields: dict):
+    product = await update_product_by_code(product_code, fields)    
+    result = jsonable_encoder(product)
+    return JSONResponse(status_code=status.HTTP_200_OK, content=result)

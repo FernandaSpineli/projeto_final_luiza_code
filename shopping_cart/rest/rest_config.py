@@ -1,32 +1,20 @@
-from typing import Callable, Tuple
-
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from shopping_cart.src.controller.main_controller import MAIN_ROUTE
 from shopping_cart.src.controller.product_controller import PRODUCT_ROUTE
 from shopping_cart.src.controller.user_controller import USER_ROUTE
 from shopping_cart.src.controller.address_controller import ADDRESSES_ROUTE
-from shopping_cart.src.controller.stock_controller import STOCK_ROUTE
-from shopping_cart.src.controller.shopping_cart_controller import SHOPPING_CART_ROUTE
-from shopping_cart.src.controller.purchase_controller import TRANSACTION_HISTORY_ROUTE
-from shopping_cart.src.models.handler_exceptions import (
-    not_found_exception,
-    conflict_exception
-)
+from shopping_cart.src.models.exceptions.exceptions import Bad_Request_Exception, Duplicated_Exception, Not_Found_Exception, Server_Exception
 
+def criar_aplicacao_fastapi():
+    app = FastAPI()
 
-def exception_config(app: FastAPI) -> Tuple[Callable]:
-    async def interceptor_not_found_exception(request: Request):
-        return not_found_exception.entity_not_found(request)
+    configurar_api_rest(app)
+    configurar_rotas(app)
 
-    async def interceptor_conflict_exception(request: Request):
-        return conflict_exception.conflict_exception(request)
-
-    return (
-        interceptor_not_found_exception,
-        interceptor_conflict_exception
-    )
+    return app
 
 
 def route_config(app: FastAPI):
@@ -47,13 +35,43 @@ def rest_config(app: FastAPI):
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    exception_config(app)
+    
+    @app.exception_handler(Exception)
+    async def exception_handler(request: Request, exception: Exception):
+      status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+      return JSONResponse(
+        status_code=status_code,
+        content={'status_code': status_code, 'message': f'Erro interno no servidor - {str(exception)}'}
+      )
 
+    @app.exception_handler(Server_Exception)
+    async def server_exception_handler(request: Request, exception: Server_Exception):
+      status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+      return JSONResponse(
+        status_code=status_code,
+        content={'status_code': status_code, 'message': exception.message}
+      )
 
-def create_api():
-    app = FastAPI()
+    @app.exception_handler(Not_Found_Exception)
+    async def not_found_exception_handler(request: Request, exception: Not_Found_Exception):
+      status_code=status.HTTP_404_NOT_FOUND
+      return JSONResponse(
+        status_code=status_code,
+        content={'status_code': status_code, 'message': exception.message}
+      )
 
-    rest_config(app)
-    route_config(app)
+    @app.exception_handler(Duplicated_Exception)
+    async def duplicated_exception_handler(request: Request, exception: Duplicated_Exception):
+      status_code = status.HTTP_409_CONFLICT
+      return JSONResponse(
+        status_code=status_code, 
+        content={'status_code': status_code, 'message': exception.message}
+      )
 
-    return app
+    @app.exception_handler(Bad_Request_Exception)
+    async def duplicated_exception_handler(request: Request, exception: Duplicated_Exception):
+      status_code = status.HTTP_400_BAD_REQUEST
+      return JSONResponse(
+        status_code=status_code, 
+        content={'status_code': status_code, 'message': exception.message}
+      )

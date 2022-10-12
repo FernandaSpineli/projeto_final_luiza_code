@@ -1,15 +1,13 @@
-from ctypes import Union
-from typing import List
-from fastapi import APIRouter
 
-from shopping_cart.src.models.entity.address import Address
+from fastapi import APIRouter, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
+
+from shopping_cart.src.models.entity.address import Address, AdressUpdateRequest
 from shopping_cart.src.business.address_business import (
     insert_address,
     get_user_addresses,
-    get_address_by_zipcode,
-    get_address_by_nickname,
-    remove_address,
-    update_address_by_zipcode
+    update_user_address
 )
 
 
@@ -20,51 +18,28 @@ ADDRESSES_ROUTE = APIRouter(
 
 @ADDRESSES_ROUTE.post("/{user_email}/addresses")
 async def add_address(user_email: str, new_address: Address):
-    try:
-        new_address = await insert_address(new_address)
-        return new_address
-    except Exception as e:
-        print(e)
+    new_address = await insert_address(user_email, new_address)
+    result = jsonable_encoder(new_address)
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=result)
 
-@ADDRESSES_ROUTE.get("/{user_email}/addresses", response_model = List[Address])
-async def get_addresses(user_email: str):
-    try:
-       user_addresses = await get_user_addresses(user_email)
-       return user_addresses
-    except Exception as e:
-        return "lista não encontrada"
-    
-@ADDRESSES_ROUTE.get("/{user_email}/addressesa/{address_nickname}", response_model= Address)
-async def get_user_address_by_nickname(user_email: str, address_nickname: str):
-    try:
-        address = await get_address_by_nickname(address_nickname)
-        return address
-    except Exception as e:
-        return "endereço não encontrado"
+@ADDRESSES_ROUTE.get("/{user_email}/addresses")
+async def get_addresses(user_email: str, zipcode: str = '', nickname: str = ''):
+    user_addresses = await get_user_addresses(user_email, zipcode, nickname)
+    return JSONResponse(status_code=status.HTTP_200_OK, content=user_addresses)
 
-@ADDRESSES_ROUTE.get("/{user_email}/addresses", response_model= Address)
-async def get_user_address_by_param(user_email: str, parameter: str):
+@ADDRESSES_ROUTE.put("/{user_email}/addresses/{id}")
+async def update_address(user_email: str, id: str, body: AdressUpdateRequest):
     try:
-        if parameter == address.zipcode:
-            address = await get_address_by_zipcode(parameter)
-            return address
-        
-    except Exception as e:
-        return "endereço não encontrado"
-    
-@ADDRESSES_ROUTE.put("/{user_email}/addresses/{address_zipcode}")
-async def update_address(user_email: str, address_zipcode: str, fields: dict):
-    try:
-        new_address = await update_address_by_zipcode(address_zipcode, fields)
+        new_address = await update_user_address(user_email, id, body)
         return new_address
     except Exception as e:
         return "erro"
     
-@ADDRESSES_ROUTE.delete("/{user_email}/addresses/{address_cep}")
-async def delete_address(user_email: str, address_zipcode: str):
-    try:
-        removed_quantity = await remove_address(address_zipcode)
-        return removed_quantity
-    except Exception as e:
-        return "falha"
+#@ADDRESSES_ROUTE.delete("/{user_email}/addresses/{address_cep}")
+#async def delete_address(user_email: str, address_zipcode: str):
+#    try:
+#        removed_quantity = await remove_address(address_zipcode)
+#        return removed_quantity
+#    except Exception as e:
+#        return "falha"
      
