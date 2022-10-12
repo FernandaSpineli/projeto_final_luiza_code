@@ -17,22 +17,19 @@ async def find_product_by_id_on_bd(id: str):
 
 async def find_product_by_name_on_bd(product_name: str):
     products_found = await PRODUCTS_COLLECTION.count_documents(
-        {"name": {"$regex": product_name}}
+        {"name": {"$regex": product_name, '$options': 'i'}}
     )
     search = []
     if products_found:
-        async for product in PRODUCTS_COLLECTION.find({"name": {"$regex": product_name}}):
+        async for product in PRODUCTS_COLLECTION.find({"name": {"$regex": product_name, '$options': 'i'}}):
             product.pop("_id")
             search.append(product)
-    print(search)
     return search
 
 
 async def remove_product_by_id(product_id: str):
     product = await PRODUCTS_COLLECTION.delete_one({'id': product_id})
-    # falta fazer validação do estoque
     await STOCK_COLLECTION.delete_one({"product_id": product_id})
-    # falta fazer validação do estoque
     return product.deleted_count > 0
 
 

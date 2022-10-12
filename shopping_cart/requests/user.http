@@ -2,30 +2,34 @@ POST http://127.0.0.1:8000/magaluJA/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "email": "joana@gmail.com",
-    "name": "joana",
-    "password": "joana123",
+    "email": "mari1@gmail.com",
+    "name": "mari",
+    "password": "mari",
     "addresses": [],
     "shopping_cart":{
-    "user_email": "joana@gmail.com",
-    "products": [],
-    "price_credit": 0.0,
-    "price_debit": 0.0,
-    "number_of_items": 0,
-    "delivery_address_id": ""
+        "user_email": "mari1@gmail.com",
+        "products": [],
+        "price_credit": 0.0,
+        "price_debit": 0.0,
+        "number_of_items": 0,
+        "delivery_address_id": ""
+        },
+    "transaction_history":{
+        "user_email": "mari1@gmail.com",
+        "transaction_history": []
     }
 }
 ####
-GET http://127.0.0.1:8000/magaluJA/users/pooo@ooo HTTP/1.1
+GET http://127.0.0.1:8000/magaluJA/users/mari1@gmail.com HTTP/1.1
 ####
-DELETE http://127.0.0.1:8000/magaluJA/users/pooo@ooo HTTP/1.1
+DELETE http://127.0.0.1:8000/magaluJA/users/mari@gmail.com HTTP/1.1
 ####
-PUT http://127.0.0.1:8000/magaluJA/users/pooo@ooo HTTP/1.1
+PUT http://127.0.0.1:8000/magaluJA/users/mari@gmail.com HTTP/1.1
 content-type: application/json
 
 {
     "name": "aaaaaaaa",
-    "pasword": "aaaaaaaa",
+    "password": "aaaaaaaa"
 }
 
 ####

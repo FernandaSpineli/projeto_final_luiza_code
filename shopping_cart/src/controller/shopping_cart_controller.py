@@ -10,6 +10,7 @@ from shopping_cart.src.business.shopping_cart_business import (
     update_product_on_cart
 )
 # adicionar função definir endereço de entrega
+# adicionar função de fechar compra
 
 SHOPPING_CART_ROUTE = APIRouter(prefix="/magaluJA/shopping-cart/{user_email}")
 

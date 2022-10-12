@@ -15,6 +15,7 @@ from shopping_cart.src.repository.product_repository import (
     find_product_by_id_on_bd,
 )
 # adicionar função definir endereço de entrega
+# adicionar função de fechar compra
 
 
 async def add_product_to_cart(user_email: str, cart_product: CartProduct):
@@ -24,7 +25,6 @@ async def add_product_to_cart(user_email: str, cart_product: CartProduct):
             product = await find_product_by_id_on_bd(cart_product.product_id)
             if product:
                 cart_product_dict = cart_product.dict()
-                # return await add_product_to_cart_on_bd(user_email, cart_product_dict)
                 check = await add_product_to_cart_on_bd(user_email, cart_product_dict)
                 if check:
                     return "Produto adicionado ao carrinho com sucesso."
@@ -41,7 +41,10 @@ async def find_product_on_cart(user_email: str, product_id: str):
         if user:
             product = await find_product_by_id_on_bd(product_id)
             if product:
-                return await find_product_on_cart_on_bd(user_email, product_id)
+                product_found = await find_product_on_cart_on_bd(user_email, product_id)
+                if product_found:
+                    return product_found
+                return "Falha ao encotrar o produto."
             return "Nenhum produto cadastrado com o ID informado"
         return "Nenhum usuário cadastrado com o e-mail informado."
     except Exception as e:

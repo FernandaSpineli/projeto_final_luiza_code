@@ -11,8 +11,8 @@ async def insert_user(new_user: User):
     try:
         if "@" not in new_user.email or len(new_user.email) < 4:
             return "E-mail inválido"
-        if new_user.email != new_user.shopping_cart.user_email:
-            return "E-mail deve ser o mesmo para o usuário e carrinho."
+        if (new_user.email != new_user.shopping_cart.user_email) or (new_user.email != new_user.transaction_history.user_email):
+            return "E-mail deve ser o mesmo para o usuário, carrinho e histórico de compras."
         duplicated_email = await find_user_by_email(new_user.email)
         if duplicated_email:
             return "O E-mail informado já está sendo usado. Verifique os dados e tente novamente."

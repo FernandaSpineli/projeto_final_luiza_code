@@ -5,6 +5,7 @@ PRODUCTS_COLLECTION = get_collection("products")
 USERS_COLLECTION = get_collection("users")
 
 # adicionar função definir endereço de entrega
+# adicionar função de fechar compra
 
 
 async def add_product_to_cart_on_bd(user_email: str, cart_product: dict):
@@ -48,6 +49,7 @@ async def find_product_on_cart_on_bd(user_email: str, product_id: str):
     for product in cart_products_list:
         if product["product_id"] == product_id:
             return product
+    return False
 
 
 async def find_cart_products_on_bd(user_email: str):

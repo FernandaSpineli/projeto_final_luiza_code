@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 from shopping_cart.src.models.entity.address import Address
 from shopping_cart.src.models.entity.shopping_cart import ShoppingCart
+from shopping_cart.src.models.entity.transaction_history import TransactionHistory
 
 
 class User(BaseModel):
@@ -11,4 +12,4 @@ class User(BaseModel):
     password: str
     addresses: List[Address] = []
     shopping_cart: ShoppingCart
- #   transaction_history: List[Purchase] = []
+    transaction_history: TransactionHistory

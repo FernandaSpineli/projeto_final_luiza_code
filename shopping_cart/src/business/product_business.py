@@ -33,7 +33,7 @@ async def find_product_by_id(product_id: str):
 async def find_product_by_name(product_name):
     try:
         products = await find_product_by_name_on_bd(product_name)
-        if len(products) > 0:
+        if products:
             return products
         return "Nenhum resultado corresponde busca."
     except Exception as e:
