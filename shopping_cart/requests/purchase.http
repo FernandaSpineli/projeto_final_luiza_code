@@ -6,7 +6,7 @@ content-type: application/json
     "products": [],
     "price": 10.5,
     "number_of_items": 5,
-    "delivery_adress_id": "",
+    "delivery_address": {},
     "payment_method": "credit"
 }
 

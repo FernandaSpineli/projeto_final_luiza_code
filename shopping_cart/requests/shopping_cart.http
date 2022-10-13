@@ -2,7 +2,7 @@ POST http://127.0.0.1:8000/magaluJA/shopping-cart/poliana@gmail.com/ HTTP/1.1
 content-type: application/json
 
 {
-    "product_id": "00002",
+    "product_id": "00001",
     "quantity": 2
 }
 ####
@@ -27,3 +27,6 @@ content-type: application/json
 ####
 
 POST http://127.0.0.1:8000/magaluJA/shopping-cart/poliana@gmail.com/transaction-history/00001/credit HTTP/1.1
+
+################
+PUT http://127.0.0.1:8000/magaluJA/shopping-cart/poliana@gmail.com/00001 HTTP/1.1

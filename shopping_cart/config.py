@@ -4,13 +4,13 @@ from dotenv import load_dotenv
 from pydantic import BaseSettings
 
 
-class Configuracao(BaseSettings):
+class Config(BaseSettings):
     bd_url: Optional[str] = None
 
 
-def iniciar_configuracao():
+def config_start():
     load_dotenv()
-    return Configuracao()
+    return Config()
 
 
-configuracao = iniciar_configuracao()
+config = config_start()

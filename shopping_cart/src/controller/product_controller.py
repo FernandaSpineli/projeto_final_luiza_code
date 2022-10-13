@@ -1,5 +1,3 @@
-from typing import List
-
 from fastapi import APIRouter
 
 from shopping_cart.src.models.entity.product import Product
@@ -24,7 +22,7 @@ async def get_product_by_id(id: str):
     return await find_product_by_id(id)
 
 
-@PRODUCT_ROUTE.get("/search/{name}")  # , response_model=List[Product])
+@PRODUCT_ROUTE.get("/search/{name}")
 async def get_product_by_name(name: str):
     return await find_product_by_name(name)
 

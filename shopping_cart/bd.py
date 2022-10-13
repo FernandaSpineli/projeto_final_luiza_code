@@ -4,19 +4,20 @@ from motor.motor_asyncio import (
     AsyncIOMotorCollection,
 )
 
-from shopping_cart.config import configuracao
+from shopping_cart.config import config
 
-def iniciar_cliente_mongo() -> AsyncIOMotorClient:
-    cliente_mongo = AsyncIOMotorClient(configuracao.bd_url)
-    return cliente_mongo
 
-cliente_mongo = iniciar_cliente_mongo()
+def init_mongo() -> AsyncIOMotorClient:
+    return AsyncIOMotorClient(config.bd_url)
 
-def obter_base_dados() -> AsyncIOMotorDatabase:
-    return cliente_mongo.get_default_database('magaluJA')
 
-def get_collection(nome_colecao: str) -> AsyncIOMotorCollection:
-    bd = obter_base_dados()
-    colecao = bd[nome_colecao]
+client_mongo = init_mongo()
 
-    return colecao
+
+def get_bd() -> AsyncIOMotorDatabase:
+    return client_mongo.get_default_database("magaluJA")
+
+
+def get_collection(collection_name: str) -> AsyncIOMotorCollection:
+    bd = get_bd()
+    return bd[collection_name]

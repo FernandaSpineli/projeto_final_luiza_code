@@ -1,16 +1,21 @@
 from shopping_cart.bd import get_collection
 
 USERS_COLLECTION = get_collection("users")
-SHOPPING_CART_COLLECTION = get_collection("shopping-cart")
+SHOPPING_CART_COLLECTION = get_collection("shopping-carts")
 TRANSACTION_HISTORY_COLLECTION = get_collection("transaction-history")
 
 
 async def insert_new_user(new_user: dict):
-    user_cart = {"user_email": new_user["email"], "products": [], "price_credit": 0.0,
-                 "price_debit": 0.0, "number_of_items": 0, "delivery_address_id": ""}
+    user_cart = {
+        "user_email": new_user["email"],
+        "products": [],
+        "price_credit": 0.0,
+        "price_debit": 0.0,
+        "number_of_items": 0,
+        "delivery_address": {},
+    }
     await SHOPPING_CART_COLLECTION.insert_one(user_cart)
-    transaction_history = {
-        "user_email": new_user["email"], "transaction_history": []}
+    transaction_history = {"user_email": new_user["email"], "transaction_history": []}
     await TRANSACTION_HISTORY_COLLECTION.insert_one(transaction_history)
     await USERS_COLLECTION.insert_one(new_user)
 
@@ -27,5 +32,5 @@ async def remove_user_by_email(user_email: str):
 
 
 async def update_user(email: str, features: dict):
-    user = await USERS_COLLECTION.update_one({'email': email}, {"$set": features})
+    user = await USERS_COLLECTION.update_one({"email": email}, {"$set": features})
     return user.modified_count == 1

@@ -8,9 +8,9 @@ from shopping_cart.src.business.shopping_cart_business import (
     remove_product_from_cart,
     clear_cart,
     update_product_on_cart,
-    cart_to_purchase
+    cart_to_purchase,
+    update_address_on_cart,
 )
-# adicionar função definir endereço de entrega
 
 SHOPPING_CART_ROUTE = APIRouter(prefix="/magaluJA/shopping-cart/{user_email}")
 
@@ -53,3 +53,8 @@ async def delete_cart(user_email: str):
 @SHOPPING_CART_ROUTE.put("/")
 async def post_product_on_cart(user_email: str, cart_product: CartProduct):
     return await update_product_on_cart(user_email, cart_product)
+
+
+@SHOPPING_CART_ROUTE.put("/{address_id}")
+async def put_address_on_cart(user_email: str, address_id: str):
+    return await update_address_on_cart(user_email, address_id)

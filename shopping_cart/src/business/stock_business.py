@@ -19,8 +19,7 @@ async def update_product_quantity(product_id: str, sum: dict):
 
 async def update_stock(product_id: str, quantity: dict):
     quantity["stock"] = int(quantity["stock"])
-    product = await find_product_by_id_on_bd(product_id)
-    if product:
+    if await find_product_by_id_on_bd(product_id):
         if quantity["stock"] < 0:
             return "Estoque não aceita quantidade negativa."
         await update_stock_on_bd(product_id, quantity)
