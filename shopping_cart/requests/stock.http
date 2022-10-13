@@ -1,0 +1,20 @@
+
+### update products
+PUT http://127.0.0.1:8000/magaluJA/stocks/4/ HTTP/1.1
+content-type: application/json
+
+{
+    "stock": 5
+}
+
+#####################
+
+### update stock
+PUT http://127.0.0.1:8000/magaluJA/stocks/redefine/3/ HTTP/1.1
+content-type: application/json
+
+{
+    "stock": 10
+}
+
+#####################

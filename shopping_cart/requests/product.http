@@ -1,0 +1,38 @@
+POST http://127.0.0.1:8000/magaluJA/products/ HTTP/1.1
+content-type: application/json
+
+{
+    "code": "3333333",
+    "name": "Toalha de banho",
+    "description": "O jogo de cama",
+    "category": "Cama",
+    "price": 295.90
+}
+
+####
+# Atualizar dados do produto
+PUT http://127.0.0.1:8000/magaluJA/products/3333333 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "toalha de banho megabanhão",
+    "category": "Toalha",
+    "description": "Toalha 500 fibras",
+    "price": 525.88
+}
+
+####
+# Consultar produto por código
+GET http://127.0.0.1:8000/magaluJA/products?product_code=3333333 HTTP/1.1
+content-type: application/json
+
+####
+# Consultar produto por nome
+GET http://127.0.0.1:8000/magaluJA/products?product_name=oa HTTP/1.1
+content-type: application/json
+
+####
+# Deletar um produto por código
+DELETE http://127.0.0.1:8000/magaluJA/products/10001 HTTP/1.1
+content-type: application/json
+

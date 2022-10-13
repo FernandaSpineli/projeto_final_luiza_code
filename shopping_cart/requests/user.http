@@ -1,0 +1,24 @@
+# Criar usuário
+POST http://127.0.0.1:8000/magaluJA/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "email": "alice34@gmail.com",
+    "name": "Alice",
+    "password": "123"
+}
+
+### Consultar usuário por email
+GET http://127.0.0.1:8000/magaluJA/users/fernada5@gmail.com HTTP/1.1
+content-type: application/json
+
+### Atualizar usuário por email
+PUT http://127.0.0.1:8000/magaluJA/users/fernada5@gmail.com HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Alice",
+    "password": "543"
+}
+
+####

@@ -1,0 +1,17 @@
+
+POST http://127.0.0.1:8000/magaluJA/transaction-history/alice34@gmail.com HTTP/1.1
+content-type: application/json
+
+{
+    "id": "54",
+    "products": [],
+    "price": 10.5,
+    "number_of_items": 5,
+    "delivery_adress_id": "",
+    "payment_method": "credit"
+}
+
+#####
+GET http://127.0.0.1:8000/magaluJA/transaction-history/alice34@gmail.com/54 HTTP/1.1
+####
+GET http://127.0.0.1:8000/magaluJA/transaction-history/alice34@gmail.com/ HTTP/1.1

@@ -1,0 +1,40 @@
+
+POST http://127.0.0.1:8000/magaluJA/users/fernanda5@gmail.com/addresses HTTP/1.1
+content-type: application/json
+
+{
+    "id": 1,
+    "user_email": "fernanda5@gmail.com",
+    "nickname": "Casa",
+    "street": "rua 1",
+    "house_number": "1",
+    "zipcode": "123",
+    "city": "sl",
+    "state": "mg"
+}
+
+####
+GET http://127.0.0.1:8000/MagaluJA/user-addresses/poli004@gmail.com/00001/ HTTP/1.1
+
+####
+PUT http://127.0.0.1:8000/MagaluJA/user-addresses/poli004@gmail.com/00001/ HTTP/1.1
+content-type: application/json
+
+{
+    "id": "00001",
+    "name": "Casa",
+    "street": "rua 1",
+    "house_number": "11111111111111111111",
+    "zipcode": "123",
+    "city": "sl",
+    "state": "mg"
+}
+
+####
+DELETE http://127.0.0.1:8000/MagaluJA/user-addresses/poli004@gmail.com/00001/ HTTP/1.1
+
+######
+
+DELETE http://127.0.0.1:8000/MagaluJA/user-addresses/poli004@gmail.com/ HTTP/1.1
+
+
