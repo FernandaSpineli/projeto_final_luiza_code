@@ -10,7 +10,7 @@ USERS_COLLECTION = get_collection("users")
 
 async def add_product_to_cart_on_bd(user_email: str, cart_product: dict):
     shopping_cart = await SHOPPING_CART_COLLECTION.find_one({'user_email': user_email}, {"_id": 0})
-    product = await PRODUCTS_COLLECTION.find_one({"id": cart_product["product_id"]}, {"_id": 0})
+    product = await PRODUCTS_COLLECTION.find_one({"code": cart_product["product_id"]}, {"_id": 0})
     quantity = cart_product["quantity"]
     cart_products_list = shopping_cart["products"]
     new_product = False
@@ -40,7 +40,7 @@ async def add_product_to_cart_on_bd(user_email: str, cart_product: dict):
         {"$set":
          {"shopping_cart": {"products": cart_products_list, "price_credit": price_credit_total, "price_debit": price_debit, "number_of_items": total_items}}})
 
-    return cart.modified_count == 1
+    return await find_cart_on_bd(user_email)
 
 
 async def find_product_on_cart_on_bd(user_email: str, product_id: str):
@@ -63,7 +63,7 @@ async def find_cart_on_bd(user_email: str):
 
 async def remove_product_from_cart_on_bd(user_email: str, product_id: str):
     shopping_cart = await SHOPPING_CART_COLLECTION.find_one({'user_email': user_email}, {"_id": 0})
-    product = await PRODUCTS_COLLECTION.find_one({"id": product_id}, {"_id": 0})
+    product = await PRODUCTS_COLLECTION.find_one({"code": product_id}, {"_id": 0})
     cart_products_list = shopping_cart["products"]
     for cart_product in cart_products_list:
         if cart_product["product_id"] == product_id:
@@ -103,8 +103,9 @@ async def clear_cart_on_bd(user_email: str):
 
 async def update_product_on_cart_on_bd(user_email, cart_product: dict):
     shopping_cart = await SHOPPING_CART_COLLECTION.find_one({'user_email': user_email}, {"_id": 0})
-    product = await PRODUCTS_COLLECTION.find_one({"id": cart_product["product_id"]}, {"_id": 0})
+    product = await PRODUCTS_COLLECTION.find_one({"code": cart_product["product_id"]}, {"_id": 0})
     cart_products_list = shopping_cart["products"]
+    updated_product = None
     for item in cart_products_list:
         if item["product_id"] == cart_product["product_id"]:
             if cart_product["quantity"] <= 0:
@@ -135,5 +136,6 @@ async def update_product_on_cart_on_bd(user_email, cart_product: dict):
                    "price_debit": price_debit,
                    "number_of_items": total_items}
                   }})
-            return cart.modified_count == 1
-    return False
+            if cart.matched_count == 1:
+              updated_product = item
+    return updated_product

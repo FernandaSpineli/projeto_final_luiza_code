@@ -56,21 +56,7 @@ async def update_product_by_code(product_code, fields):
     exist_product = await find_product_by_code(product_code)
     if not exist_product:
         raise Bad_Request_Exception("O produto informado não está cadastrado")
-    
-    try:
-        updated = await update_product_by_code_db(product_code, fields)
-        if updated == False:
-            raise Server_Exception('Erro ao atualizar o produto')
-        
-        updated_product = await find_product_by_code(product_code)
-        product = ProductResponse(
-            code = updated_product['code'],
-            name = updated_product['name'],
-            description = updated_product['description'],
-            category = updated_product['category'],
-            price = updated_product['price']
-        )
-        return product
-    except Exception as e:
-        raise Server_Exception(f'Erro ao atualizar produto - {str(e)}')
+    updated = await update_product_by_code_db(product_code, fields)
+    if updated == False:
+        raise Server_Exception('Erro ao atualizar o produto')
         

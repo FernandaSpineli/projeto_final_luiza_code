@@ -1,8 +1,9 @@
-POST http://127.0.0.1:8000/magaluJA/transaction-history/teste2@gmail.com HTTP/1.1
+
+POST http://127.0.0.1:8000/magaluJA/transaction-history/alice34@gmail.com HTTP/1.1
 content-type: application/json
 
 {
-    "id": "00004",
+    "id": "54",
     "products": [],
     "price": 10.5,
     "number_of_items": 5,
@@ -11,6 +12,6 @@ content-type: application/json
 }
 
 #####
-GET http://127.0.0.1:8000/magaluJA/transaction-history/teste1@gmail.com/00006 HTTP/1.1
+GET http://127.0.0.1:8000/magaluJA/transaction-history/alice34@gmail.com/54 HTTP/1.1
 ####
-GET http://127.0.0.1:8000/magaluJA/transaction-history/teste2@gmail.com/ HTTP/1.1
+GET http://127.0.0.1:8000/magaluJA/transaction-history/alice34@gmail.com/ HTTP/1.1

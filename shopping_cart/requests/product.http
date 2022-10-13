@@ -15,10 +15,10 @@ PUT http://127.0.0.1:8000/magaluJA/products/3333333 HTTP/1.1
 content-type: application/json
 
 {
-    "name": "toalha de banho megabanhão dd",
+    "name": "toalha de banho megabanhão",
     "category": "Toalha",
-    "description": "Toalha 5000 fibras",
-    "price": 525.99
+    "description": "Toalha 500 fibras",
+    "price": 525.88
 }
 
 ####

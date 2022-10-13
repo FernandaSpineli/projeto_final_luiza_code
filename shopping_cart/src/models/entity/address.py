@@ -3,7 +3,6 @@ from pydantic import BaseModel
 
 class Address(BaseModel):
     id: int
-    user_email: str
     nickname: str
     street: str
     house_number: str

@@ -15,17 +15,14 @@ async def insert_new_user(new_user: dict):
     await TRANSACTION_HISTORY_COLLECTION.insert_one(transaction_history)
     return await USERS_COLLECTION.insert_one(new_user)
 
-
 async def find_user_by_email(email: str):
     return await USERS_COLLECTION.find_one({"email": email})
-
 
 async def remove_user_by_email(user_email: str):
     user = await USERS_COLLECTION.delete_one({"email": user_email})
     await SHOPPING_CART_COLLECTION.delete_one({"user_email": user_email})
     await TRANSACTION_HISTORY_COLLECTION.delete_one({"user_email": user_email})
     return user.deleted_count == 1
-
 
 async def update_user(email: str, features: dict):
     user = await USERS_COLLECTION.update_one({'email': email}, {"$set": features})

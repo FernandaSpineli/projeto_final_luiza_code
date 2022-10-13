@@ -8,7 +8,7 @@ from shopping_cart.src.business.product_business import(
     get_product,
     update_product_by_code
 )
-from shopping_cart.src.models.exceptions.exceptions import Bad_Request_Exception, Not_Found_Exception
+from shopping_cart.src.models.exceptions.exceptions import Bad_Request_Exception
 
 
 PRODUCT_ROUTE = APIRouter(prefix="/magaluJA/products")
@@ -34,8 +34,6 @@ async def get_product_by_code_or_name(product_code: str = '', product_name: str 
     return JSONResponse(status_code=status.HTTP_200_OK, content=result)
         
  # Atualizar dados do produto
-@PRODUCT_ROUTE.put("/{product_code}")
+@PRODUCT_ROUTE.put("/{product_code}", status_code=status.HTTP_204_NO_CONTENT)
 async def update_product(product_code: str, fields: dict):
-    product = await update_product_by_code(product_code, fields)    
-    result = jsonable_encoder(product)
-    return JSONResponse(status_code=status.HTTP_200_OK, content=result)
+    return await update_product_by_code(product_code, fields)    

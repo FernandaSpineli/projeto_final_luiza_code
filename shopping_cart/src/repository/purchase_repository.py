@@ -12,7 +12,8 @@ async def create_new_purchase_on_bd(user_email: str, purchase: dict):
 
     await USERS_COLLECTION.update_one({'email': user_email}, {"$set": {"transaction_history": purchase_list}})
 
-    return check.modified_count == 1
+    if check.modified_count == 1:
+        return True
 
 
 async def find_purchase_by_id_on_bd(user_email: str, purchase_id: str):
