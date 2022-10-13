@@ -7,7 +7,7 @@ from motor.motor_asyncio import (
 from shopping_cart.config import configuracao
 
 def iniciar_cliente_mongo() -> AsyncIOMotorClient:
-    cliente_mongo = AsyncIOMotorClient('mongodb+srv://fernanda:fer123@cluster0.jkalmoc.mongodb.net/bdFerTest?retryWrites=true&w=majority')
+    cliente_mongo = AsyncIOMotorClient()
     return cliente_mongo
 
 cliente_mongo = iniciar_cliente_mongo()
