@@ -10,7 +10,7 @@ def iniciar_cliente_mongo() -> AsyncIOMotorClient:
     cliente_mongo = AsyncIOMotorClient()
     return cliente_mongo
 
-cliente_mongo = iniciar_cliente_mongo()
+cliente_mongo = iniciar_cliente_mongo(bd_url)
 
 def obter_base_dados() -> AsyncIOMotorDatabase:
     return cliente_mongo.get_default_database()
